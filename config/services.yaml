@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    #
+    # INSTALLER
+    #
+
+    OpenDxp\Bundle\PersonalizationBundle\Installer:
+        public: true
+        arguments:
+            $bundle: "@=service('kernel').getBundle('OpenDxpPersonalizationBundle')"
+
+    # auto-register all controllers as services
+    OpenDxp\Bundle\PersonalizationBundle\Controller\:
+        resource: '../src/Controller'
+        public: true
+        tags: [ 'controller.service_arguments' ]
+
+    # Newsletter Adapter
+
+    opendxp.document.newsletter.factory.default:
+        class: OpenDxp\Bundle\NewsletterBundle\Document\Newsletter\DefaultAddressSourceAdapterFactory
+        arguments:
+            - 'OpenDxp\Bundle\PersonalizationBundle\Document\Newsletter\AddressSourceAdapter\DefaultAdapter'

@@ -1,0 +1,43 @@
+opendxp_personalization:
+    targeting:
+        data_providers:
+            device: OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProvider\Device
+            geoip: OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProvider\GeoIp
+            geolocation: OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProvider\GeoLocation
+            targeting_storage: OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProvider\TargetingStorage
+            visited_pages_counter: OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProvider\VisitedPagesCounter
+        conditions:
+            browser: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\Browser
+            country: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\Country
+            geopoint: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\GeoPoint
+            hardwareplatform: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\HardwarePlatform
+            language: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\Language
+            operatingsystem: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\OperatingSystem
+            referringsite: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\ReferringSite
+            searchengine: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\SearchEngine
+            target_group: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\TargetGroup
+            timeonsite: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\TimeOnSite
+            url: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\Url
+            visitedpagesbefore: OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\VisitedPagesBefore
+        action_handlers:
+            assign_target_group: OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\AssignTargetGroup
+            codesnippet: OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\CodeSnippet
+            redirect: OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\Redirect
+opendxp:
+    documents:
+        type_definitions:
+            map:
+                snippet:
+                    class: \OpenDxp\Bundle\PersonalizationBundle\Model\Document\Snippet
+                page:
+                    class: \OpenDxp\Bundle\PersonalizationBundle\Model\Document\Page
+    objects:
+        class_definitions:
+            data:
+                map:
+                    targetGroup: \OpenDxp\Model\DataObject\ClassDefinition\Data\TargetGroup
+                    targetGroupMultiselect: \OpenDxp\Model\DataObject\ClassDefinition\Data\TargetGroupMultiselect
+    models:
+        class_overrides:
+            'OpenDxp\Model\Document\Page': 'OpenDxp\Bundle\PersonalizationBundle\Model\Document\Page'
+            'OpenDxp\Model\Document\Snippet': 'OpenDxp\Bundle\PersonalizationBundle\Model\Document\Snippet'

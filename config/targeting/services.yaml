@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    OpenDxp\Bundle\PersonalizationBundle\Targeting\Maintenance\TargetingStorageTask: ~
+
+    OpenDxp\Bundle\PersonalizationBundle\Targeting\Service\TargetingEnableService: ~

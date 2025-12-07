@@ -1,0 +1,45 @@
+.opendxp_nav_icon_targeting {
+    background: url(/bundles/opendxpadmin/img/flat-white-icons/person.svg) center center no-repeat !important;
+}
+
+.opendxp_nav_icon_target_groups {
+    background: url(/bundles/opendxpadmin/img/flat-white-icons/targetgroup.svg) center center no-repeat !important;
+}
+
+.opendxp_nav_icon_targeting_toolbar {
+    background: url(/bundles/opendxpadmin/img/flat-white-icons/ok.svg) center center no-repeat !important;
+}
+
+.opendxp_icon_targeting {
+    background: url(/bundles/opendxpadmin/img/flat-color-icons/person.svg) center center no-repeat !important;
+}
+
+.opendxp_icon_targeting_toolbar_enable {
+    background: url(/bundles/opendxpadmin/img/flat-color-icons/ok.svg) center center no-repeat !important;
+}
+
+.opendxp_icon_targeting_toolbar_disable {
+    background: url(/bundles/opendxpadmin/img/flat-color-icons/stop-circle.svg) center center no-repeat !important;
+}
+
+.opendxp_icon_targeting_toolbar {
+    background: url(/bundles/opendxpadmin/img/flat-color-icons/list.svg) center center no-repeat !important;
+}
+
+.opendxp_nav_icon_usergroup {
+    background: url(/bundles/opendxpadmin/img/flat-white-icons/targetgroup.svg) center center no-repeat !important;
+}
+
+.opendxp_icon_usergroup {
+    background: url(/bundles/opendxpadmin/img/flat-color-icons/targetgroup.svg) center center no-repeat !important;
+}
+
+.opendxp_icon_target_group,
+.opendxp_icon_target_groups,
+.opendxp_icon_targetGroup,
+.opendxp_icon_targetGroupMultiselect,
+.opendxp_icon_personas,
+.opendxp_icon_persona,
+.opendxp_icon_personamultiselect {
+    background: url(/bundles/opendxpadmin/img/flat-color-icons/targetgroup.svg) center center no-repeat !important;
+}

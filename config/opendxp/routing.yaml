@@ -1,0 +1,6 @@
+_opendxp_bundle_personalization_backend:
+    resource: "../../src/Controller/"
+    type: attribute
+    prefix: /admin/bundle/personalization
+    options:
+        expose: true

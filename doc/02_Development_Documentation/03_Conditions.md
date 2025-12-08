@@ -5,17 +5,17 @@ to implement `match()` method which always returns a boolean.
 
 To implement a condition, you need to implement 2 parts:
 
-* A PHP class implementing the [`ConditionInterface`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/Condition/ConditionInterface.php).
-  Have a look at [existing implementations](https://github.com/pimcore/personalization-bundle/tree/main/src/Targeting/Condition)
+* A PHP class implementing the [`ConditionInterface`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition/ConditionInterface.php).
+  Have a look at [existing implementations](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition)
   to get an idea how to implement your own conditions.
-* A frontend JS class defining the admin UI for your condition. You can have a look at [this bundle's conditions](https://github.com/pimcore/personalization-bundle/blob/main/public/js/settings/conditions.js)
-  for UI examples and at the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/conditions.js)
+* A frontend JS class defining the admin UI for your condition. You can have a look at [this bundle's conditions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/conditions.js)
+  for UI examples and at the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/conditions.js)
   as example for a third-party integration.
 
 
 ## Implementing a Condition
 
-As stated before, a condition needs to implement the [`ConditionInterface`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/Condition/ConditionInterface.php).
+As stated before, a condition needs to implement the [`ConditionInterface`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition/ConditionInterface.php).
 The most important method in the interface is the `match()` method which receives the current `VisitorInfo` instance and
 is expected to return a boolean which indicates if the condition matches or not.
 
@@ -88,7 +88,7 @@ opendxp_personalization:
 
 ### Building a Condition Instance
 
-When an instance of your condition is build, by default the [`ConditionFactory`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/ConditionFactory.php)
+When an instance of your condition is build, by default the [`ConditionFactory`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/ConditionFactory.php)
 will call the static `fromConfig()` method with the data configured in the admin UI. Avoid injecting any services or
 custom data into your condition and use the data provider system instead to add data to the `VisitorInfo`. However, if
 you need more control over how your condition is built you can either:
@@ -102,19 +102,19 @@ you need more control over how your condition is built you can either:
 
 ## Condition Data
 
-If your condition needs any outside data, implement the [`DataProviderDependentInterface`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/DataProviderDependentInterface.php)
+If your condition needs any outside data, implement the [`DataProviderDependentInterface`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/DataProviderDependentInterface.php)
 and define a list of data provider keys which need to be set on the `VisitorInfo` before matching. We'll enhance our `TimeOfTheDay`
-condition on the [Data Providers](./05_Data_Providers.md) chapter. For further examples, you can take a look at [existing core conditions](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/Condition).
+condition on the [Data Providers](./05_Data_Providers.md) chapter. For further examples, you can take a look at [existing core conditions](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition).
 
 
 ## Condition Variables
 
-An important part are [variable conditions](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/Condition/VariableConditionInterface.php)
+An important part are [variable conditions](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition/VariableConditionInterface.php)
 which support the `session_with_variables` rule matching scope. A condition implementing this interface is expected to return
 an array of the variables which led to match the condition in the `getMatchedVariables()` method. This data will be used
 to determine if the rule was already applied with the exact same data.
 
-You should implement this interface whenever possible. To get started, you can use the [`AbstractVariableCondition`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/Condition/AbstractVariableCondition.php)
+You should implement this interface whenever possible. To get started, you can use the [`AbstractVariableCondition`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition/AbstractVariableCondition.php)
 which contains helper methods to collect variable data. Make sure you build your data in a deterministic way (e.g. using 
 the same order of keys in an array structure or the same format when serializing data) as a hash of this data is used to
 compare it to previous evaluations in order to decide if a rule needs to be applied.
@@ -159,8 +159,8 @@ To make your condition configurable, you need to create a JS class defining the 
 so, create a class extending `opendxp.bundle.personalization.settings.condition.abstract` and register it to the system by calling
 `opendxp.bundle.personalization.settings.conditions.register()`. 
 
-Have a look at [this bundle's conditions](https://github.com/pimcore/personalization-bundle/blob/main/public/js/settings/conditions.js)
-and the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/conditions.js)
+Have a look at [this bundle's conditions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/conditions.js)
+and the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/conditions.js)
 for examples.
 
 Start by adding a new JS file implementing the admin UI panel for your condition:
@@ -223,7 +223,7 @@ Start by adding a new JS file implementing the admin UI panel for your condition
 }());
 ```
 
-As soon as you [configured OpenDxp to load the newly created file](https://pimcore.com/docs/platform/Pimcore/Extending_Pimcore/Bundle_Developers_Guide/Loading_Service_Definitions)
+As soon as you [configured OpenDxp to load the newly created file](https://docs.opendxp.io/docs/core-framework/Extending_OpenDxp/Bundle_Developers_Guide/Loading_Service_Definitions)
 you should see your new condition in the list of available conditions:
 
 ![Time of the Day Condition](../img/targeting_custom_condition_timeoftheday.png)

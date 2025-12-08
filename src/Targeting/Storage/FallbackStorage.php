@@ -74,9 +74,9 @@ class FallbackStorage implements TargetingStorageInterface
             $this->migrateFromFallback($visitorInfo, $scope);
 
             return $this->primaryStorage->all($visitorInfo, $scope);
-        } else {
-            return $this->fallbackStorage->all($visitorInfo, $scope);
         }
+
+        return $this->fallbackStorage->all($visitorInfo, $scope);
     }
 
     public function has(VisitorInfo $visitorInfo, string $scope, string $name): bool
@@ -87,9 +87,9 @@ class FallbackStorage implements TargetingStorageInterface
             }
 
             return $this->primaryStorage->has($visitorInfo, $scope, $name);
-        } else {
-            return $this->fallbackStorage->has($visitorInfo, $scope, $name);
         }
+
+        return $this->fallbackStorage->has($visitorInfo, $scope, $name);
     }
 
     public function set(VisitorInfo $visitorInfo, string $scope, string $name, mixed $value): void
@@ -112,15 +112,15 @@ class FallbackStorage implements TargetingStorageInterface
             }
 
             return $this->primaryStorage->get($visitorInfo, $scope, $name, $default);
-        } else {
-            return $this->fallbackStorage->get($visitorInfo, $scope, $name, $default);
         }
+
+        return $this->fallbackStorage->get($visitorInfo, $scope, $name, $default);
     }
 
     /**
      * {@inheritdoc }
      */
-    public function clear(VisitorInfo $visitorInfo, string $scope = null): void
+    public function clear(VisitorInfo $visitorInfo, ?string $scope = null): void
     {
         $this->fallbackStorage->clear($visitorInfo, $scope);
 
@@ -138,18 +138,18 @@ class FallbackStorage implements TargetingStorageInterface
     {
         if ($visitorInfo->hasVisitorId()) {
             return $this->primaryStorage->getCreatedAt($visitorInfo, $scope);
-        } else {
-            return $this->fallbackStorage->getCreatedAt($visitorInfo, $scope);
         }
+
+        return $this->fallbackStorage->getCreatedAt($visitorInfo, $scope);
     }
 
     public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
     {
         if ($visitorInfo->hasVisitorId()) {
             return $this->primaryStorage->getUpdatedAt($visitorInfo, $scope);
-        } else {
-            return $this->fallbackStorage->getUpdatedAt($visitorInfo, $scope);
         }
+
+        return $this->fallbackStorage->getUpdatedAt($visitorInfo, $scope);
     }
 
     private function migrateFromFallback(VisitorInfo $visitorInfo, string $scope): void

@@ -1,2 +1,13 @@
 parameters:
-	ignoreErrors:
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
+
+        -
+            path: src/Targeting/Document/DocumentTargetingConfigurator.php
+            identifier: varTag.nativeType
+            count: 1
+        -
+            path: src/Model/Document/Targeting/TargetingDocumentDaoTrait.php
+            identifier: varTag.nativeType
+            count: 4

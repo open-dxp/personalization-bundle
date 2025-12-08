@@ -38,7 +38,7 @@ class OpenDxpPersonalizationBundle extends AbstractOpenDxpBundle implements Open
 
     /*public function getComposerPackageName(): string
     {
-       return 'pimcore/personalization-bundle';
+       return 'open-dxp/personalization-bundle';
     }*/
 
     public function getContainerExtension(): ?ExtensionInterface

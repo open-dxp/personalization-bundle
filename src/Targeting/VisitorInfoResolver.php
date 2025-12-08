@@ -189,12 +189,7 @@ class VisitorInfoResolver
 
     private function handleTargetingRuleActions(VisitorInfo $visitorInfo, Rule $rule): void
     {
-        $actions = $rule->getActions();
-        if (!$actions || !is_array($actions)) {
-            return;
-        }
-
-        foreach ($actions as $action) {
+        foreach ($rule->getActions() as $action) {
             if (!is_array($action)) {
                 continue;
             }
@@ -212,7 +207,6 @@ class VisitorInfoResolver
             return $this->targetingRules;
         }
 
-        /** @var Rule\Listing|Rule\Listing\Dao $list */
         $list = new Rule\Listing();
         $list->setCondition('active = 1');
         $list->setOrderKey('prio');

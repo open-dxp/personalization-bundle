@@ -31,7 +31,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
      */
     public function getDataFromResource(
         mixed $data,
-        Dataobject\Concrete $object = null,
+        ?Dataobject\Concrete $object = null,
         array $params = []
     ): null|string|int {
         if (!empty($data)) {
@@ -52,7 +52,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
      */
     public function getDataForResource(
         mixed $data,
-        DataObject\Concrete $object = null,
+        ?DataObject\Concrete $object = null,
         array $params = []
     ): null|string|int {
         $this->init();
@@ -72,7 +72,6 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
      */
     public function configureOptions(): void
     {
-        /** @var Tool\Targeting\TargetGroup\Listing|Tool\Targeting\TargetGroup\Listing\Dao $list */
         $list = new Tool\Targeting\TargetGroup\Listing();
         $list->setOrder('asc');
         $list->setOrderKey('name');

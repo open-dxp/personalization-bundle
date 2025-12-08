@@ -161,7 +161,6 @@ class TargetingController extends UserAwareController implements KernelControlle
     {
         $targetGroups = [];
 
-        /** @var TargetGroup\Listing|TargetGroup\Listing\Dao $list */
         $list = new TargetGroup\Listing();
 
         if ($request->get('add-default')) {
@@ -188,7 +187,6 @@ class TargetingController extends UserAwareController implements KernelControlle
     #[Route('/target-group/add', name: 'opendxp_bundle_personalization_targeting_targetgroupadd', methods: ['POST'])]
     public function targetGroupAddAction(Request $request, CoreCacheHandler $cache): JsonResponse
     {
-        /** @var TargetGroup|TargetGroup\Dao $targetGroup */
         $targetGroup = new TargetGroup();
         $targetGroup->setName($this->correctName($request->get('name')));
         $targetGroup->save();

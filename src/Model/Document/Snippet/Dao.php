@@ -22,7 +22,7 @@ use OpenDxp\Model;
 /**
  * @internal
  *
- * @property \Pimcore\Bundle\PersonalizationBundle\Model\Document\Snippet $model
+ * @property \OpenDxp\Bundle\PersonalizationBundle\Model\Document\Snippet $model
  */
 class Dao extends Model\Document\Snippet\Dao implements TargetingDocumentDaoInterface
 {

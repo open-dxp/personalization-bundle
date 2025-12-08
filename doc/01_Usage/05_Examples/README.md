@@ -3,7 +3,7 @@
 The following pages show a few examples to better understand how things can be achieved with the OpenDxp targeting 
 engine. 
 
-All mentioned rules here are configured and set up in our [demo](https://demo.pimcore.fun) and can be 
+All mentioned rules here are configured and set up in our [demo](https://demo.opendxp.io) and can be 
 tested there. 
 
 
@@ -27,7 +27,7 @@ the target group is actually assigned to the visitors profile.
 
 ![Technical Guy Settings](../../img/user_docs/examples_technical-guy2.jpg)
   
-For a real-life example please have a look at our [public demo instance](https://demo.pimcore.fun/en/More-Stuff/Demo-Features/Personalization).
+For a real-life example please have a look at our [public demo instance](https://demo.opendxp.io/en/More-Stuff/Demo-Features/Personalization).
  
 ##### Global Targeting Rules with simple Conditions & Actions
 

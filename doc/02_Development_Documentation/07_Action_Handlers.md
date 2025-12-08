@@ -1,16 +1,16 @@
 # Action Handlers
 
 After a targeting rule matched it executes one or more actions as configured in the admin UI. These actions are actually
-executed by action handlers, which are services implementing the [`ActionHandlerInterface`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/ActionHandler/ActionHandlerInterface.php).
+executed by action handlers, which are services implementing the [`ActionHandlerInterface`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/ActionHandler/ActionHandlerInterface.php).
 
 As with conditions, an action handler consists of 2 parts:
 
-* A PHP class implementing the [`ActionHandlerInterface`](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/ActionHandler/ActionHandlerInterface.php).
-  Have a look at [existing implementations](https://github.com/pimcore/personalization-bundle/tree/main/src/Targeting/Targeting/ActionHandler)
+* A PHP class implementing the [`ActionHandlerInterface`](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/ActionHandler/ActionHandlerInterface.php).
+  Have a look at [existing implementations](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Targeting/ActionHandler)
   to get an idea how to implement your own action handlers.
 * A frontend JS class defining the admin UI for your action handler as shown on the actions tab of a targeting rule. You
-  can have a look at [OpenDxp's core actions](https://github.com/pimcore/personalization-bundle/blob/main/public/js/settings/actions.js)
-  for UI examples and at the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/actions.js)
+  can have a look at [OpenDxp's core actions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/actions.js)
+  for UI examples and at the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/actions.js)
   as example for a third-party integration.
 
 
@@ -92,7 +92,7 @@ If your action handler needs to apply data in a later stage of the request/respo
 the `VisitorInfo` which can be consumed later. Currently only the `response` action scope is defined which is executed
 in the `onKernelResponse` event, but more action scopes might be added in the future. 
 
-Have a look at the [CodeSnippet](https://github.com/pimcore/personalization-bundle/blob/main/src/Targeting/ActionHandler/CodeSnippet.php)
+Have a look at the [CodeSnippet](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/ActionHandler/CodeSnippet.php)
 action handler as example. It registers an action via `$visitorInfo->addAction()` and implements the `ResponseTransformingActionHandlerInterface::transformResponse()`
 which is called by the targeting engine for every action registered with the `response` scope.
 
@@ -103,8 +103,8 @@ To make your action handler appear in the admin UI, you need to create and regis
 for your action. Create a class extending `opendxp.settings.targeting.action.abstract` and register it to the system by
 calling `opendxp.bundle.personalization.settings.actions.register()`. 
 
-Have a look at [this bundle's actions](https://github.com/pimcore/personalization-bundle/blob/main/public/js/settings/actions.js)
-and the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/actions.js)
+Have a look at [this bundle's actions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/actions.js)
+and the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/actions.js)
 for examples.
 
 Start by adding a new JS file implementing the admin UI panel for your action:
@@ -165,7 +165,7 @@ Start by adding a new JS file implementing the admin UI panel for your action:
 }());
 ```
 
-As soon as you [configured OpenDxp to load the newly created file](https://pimcore.com/docs/platform/Pimcore/Extending_Pimcore/Bundle_Developers_Guide/Loading_Service_Definitions)
+As soon as you [configured OpenDxp to load the newly created file](https://docs.opendxp.io/docs/core-framework/Extending_OpenDxp/Bundle_Developers_Guide/Loading_Service_Definitions)
 you should see your new action in the list of available actions:
 
 ![Log Action](../img/targeting_custom_action_log.png)

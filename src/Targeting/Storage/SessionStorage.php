@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\EventListener\TargetingSessionBagListener;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
@@ -26,9 +27,9 @@ class SessionStorage implements TargetingStorageInterface
 {
     use TimestampsTrait;
 
-    const STORAGE_KEY_CREATED_AT = '_c';
+    const string STORAGE_KEY_CREATED_AT = '_c';
 
-    const STORAGE_KEY_UPDATED_AT = '_u';
+    const string STORAGE_KEY_UPDATED_AT = '_u';
 
     public function all(VisitorInfo $visitorInfo, string $scope): array
     {
@@ -89,7 +90,7 @@ class SessionStorage implements TargetingStorageInterface
     /**
      * {@inheritdoc }
      */
-    public function clear(VisitorInfo $visitorInfo, string $scope = null): void
+    public function clear(VisitorInfo $visitorInfo, ?string $scope = null): void
     {
         if (null !== $scope) {
             $bag = $this->getSessionBag($visitorInfo, $scope, true);
@@ -195,16 +196,14 @@ class SessionStorage implements TargetingStorageInterface
 
     private function updateTimestamps(
         AttributeBag $bag,
-        \DateTimeInterface $createdAt = null,
-        \DateTimeInterface $updatedAt = null
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null
     ): void {
         $timestamps = $this->normalizeTimestamps($createdAt, $updatedAt);
 
         if (!$bag->has(self::STORAGE_KEY_CREATED_AT)) {
             $bag->set(self::STORAGE_KEY_CREATED_AT, $timestamps['createdAt']->getTimestamp());
-            $bag->set(self::STORAGE_KEY_UPDATED_AT, $timestamps['updatedAt']->getTimestamp());
-        } else {
-            $bag->set(self::STORAGE_KEY_UPDATED_AT, $timestamps['updatedAt']->getTimestamp());
         }
+        $bag->set(self::STORAGE_KEY_UPDATED_AT, $timestamps['updatedAt']->getTimestamp());
     }
 }

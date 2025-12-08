@@ -34,6 +34,6 @@ When assigning a target group via global targeting rules, also a assignment weig
 assignment count of the target group respectively. 
 
 
-For more fine-grained profiling possibilities see our [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/README.md)
-with its [Customer Segment functionality](https://github.com/pimcore/customer-data-framework/blob/master/doc/11_CustomerSegments.md)
-and its [extensions to the OpenDxp targeting engine](https://github.com/pimcore/customer-data-framework/blob/master/doc/30_Personalization.md).  
+For more fine-grained profiling possibilities see our [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/README.md)
+with its [Customer Segment functionality](https://github.com/open-dxp/customer-data-framework/tree/1.x/doc/11_CustomerSegments.md)
+and its [extensions to the OpenDxp targeting engine](https://github.com/open-dxp/customer-data-framework/tree/1.x/doc/30_Personalization.md).  

@@ -25,11 +25,11 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
  */
 interface TargetingStorageInterface
 {
-    const SCOPE_SESSION = 'session';
+    const string SCOPE_SESSION = 'session';
 
-    const SCOPE_VISITOR = 'visitor';
+    const string SCOPE_VISITOR = 'visitor';
 
-    const VALID_SCOPES = [
+    const array VALID_SCOPES = [
         self::SCOPE_SESSION,
         self::SCOPE_VISITOR,
     ];
@@ -40,7 +40,7 @@ interface TargetingStorageInterface
      *  - write an entry to make sure the storage has a created/updated date
      *  - set the entry created date to something in the past when migrating from another storage
      */
-    const STORAGE_KEY_META_ENTRY = '_m';
+    const string STORAGE_KEY_META_ENTRY = '_m';
 
     public function all(VisitorInfo $visitorInfo, string $scope): array;
 
@@ -50,7 +50,7 @@ interface TargetingStorageInterface
 
     public function get(VisitorInfo $visitorInfo, string $scope, string $name, mixed $default = null): mixed;
 
-    public function clear(VisitorInfo $visitorInfo, string $scope = null): void;
+    public function clear(VisitorInfo $visitorInfo, ?string $scope = null): void;
 
     public function migrateFromStorage(TargetingStorageInterface $storage, VisitorInfo $visitorInfo, string $scope): void;
 

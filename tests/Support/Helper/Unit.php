@@ -27,7 +27,7 @@ class Unit extends \Codeception\Module
     public function _beforeSuite($settings = [])
     {
 
-        /** @var Pimcore $pimcoreModule */
+        /** @var OpenDxp $opendxpModule */
         $opendxpModule = $this->getModule('\\' . OpenDxp::class);
 
         //create migrations table in order to allow installation - needed for SettingsStoreAware Installer

@@ -45,7 +45,7 @@ class Device implements DataProviderInterface
      * The cache pool which is passed to the DeviceDetector
      *
      */
-    private TagAwareAdapterInterface $cachePool;
+    private ?TagAwareAdapterInterface $cachePool = null;
 
     public function __construct(LoggerInterface $logger)
     {
@@ -79,7 +79,7 @@ class Device implements DataProviderInterface
         );
     }
 
-    private function handleOverrides(Request $request, array $result = null): ?array
+    private function handleOverrides(Request $request, ?array $result = null): ?array
     {
         $overrides = OverrideAttributeResolver::getOverrideValue($request, 'device');
         if (empty($overrides)) {

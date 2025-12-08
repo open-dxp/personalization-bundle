@@ -37,7 +37,7 @@ final class DefaultAdapter extends BaseDefaultAdapter
         parent::__construct($params);
     }
 
-    protected function getListing(): ?Listing
+    protected function getListing(): Listing
     {
         if (empty($this->list)) {
             $objectList = '\\OpenDxp\\Model\\DataObject\\' . ucfirst($this->class) . '\\Listing';

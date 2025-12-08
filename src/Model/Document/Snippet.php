@@ -20,7 +20,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Model\Document\Targeting\TargetingDocum
 use OpenDxp\Bundle\PersonalizationBundle\Model\Document\Traits\TargetDocumentTrait;
 
 /**
- * @method \Pimcore\Bundle\PersonalizationBundle\Model\Document\Snippet\Dao getDao()
+ * @method \OpenDxp\Bundle\PersonalizationBundle\Model\Document\Snippet\Dao getDao()
  */
 class Snippet extends \OpenDxp\Model\Document\Snippet implements TargetingDocumentInterface
 {

@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -198,7 +199,7 @@ EOF;
     /**
      * {@inheritdoc }
      */
-    public function clear(VisitorInfo $visitorInfo, string $scope = null): void
+    public function clear(VisitorInfo $visitorInfo, ?string $scope = null): void
     {
         if (!$visitorInfo->hasVisitorId()) {
             return;
@@ -324,8 +325,8 @@ EOF;
     private function updateTimestamps(
         VisitorInfo $visitorInfo,
         string $scope,
-        \DateTimeInterface $createdAt = null,
-        \DateTimeInterface $updatedAt = null
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null
     ): void {
         $timestamps = $this->normalizeTimestamps($createdAt, $updatedAt);
 

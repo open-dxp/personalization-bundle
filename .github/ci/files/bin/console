@@ -40,7 +40,7 @@ if ($input->hasParameterOption('--no-debug', true)) {
     putenv('APP_DEBUG='.$_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = '0');
 }
 
-/** @var \Pimcore\Kernel $kernel */
+/** @var \OpenDxp\Kernel $kernel */
 $kernel = \OpenDxp\Bootstrap::startupCli();
 $application = new \OpenDxp\Console\Application($kernel);
 $application->run();

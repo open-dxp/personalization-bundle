@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Cookie\CookieSaveHandlerInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
@@ -34,13 +35,13 @@ class CookieStorage implements TargetingStorageInterface
 {
     use TimestampsTrait;
 
-    const COOKIE_NAME_SESSION = '_pc_tss'; // tss = targeting session storage
+    const string COOKIE_NAME_SESSION = '_pc_tss'; // tss = targeting session storage
 
-    const COOKIE_NAME_VISITOR = '_pc_tvs'; // tvs = targeting visitor storage
+    const string COOKIE_NAME_VISITOR = '_pc_tvs'; // tvs = targeting visitor storage
 
-    const STORAGE_KEY_CREATED_AT = '_c';
+    const string STORAGE_KEY_CREATED_AT = '_c';
 
-    const STORAGE_KEY_UPDATED_AT = '_u';
+    const string STORAGE_KEY_UPDATED_AT = '_u';
 
     private CookieSaveHandlerInterface $saveHandler;
 
@@ -74,7 +75,7 @@ class CookieStorage implements TargetingStorageInterface
         ];
 
         // filter internal values
-        $result = array_filter($this->data[$scope], function ($key) use ($blocklist) {
+        $result = array_filter($this->data[$scope], static function ($key) use ($blocklist) {
             return !in_array($key, $blocklist, true);
         }, ARRAY_FILTER_USE_KEY);
 
@@ -112,14 +113,12 @@ class CookieStorage implements TargetingStorageInterface
     /**
      * {@inheritdoc }
      */
-    public function clear(VisitorInfo $visitorInfo, string $scope = null): void
+    public function clear(VisitorInfo $visitorInfo, ?string $scope = null): void
     {
         if (null === $scope) {
             $this->data = [];
-        } else {
-            if (isset($this->data[$scope])) {
-                unset($this->data[$scope]);
-            }
+        } elseif (isset($this->data[$scope])) {
+            unset($this->data[$scope]);
         }
 
         $this->addSaveListener($visitorInfo);
@@ -173,7 +172,7 @@ class CookieStorage implements TargetingStorageInterface
             throw new \InvalidArgumentException(sprintf('Scope "%s" is not supported', $scope));
         }
 
-        if (isset($this->data[$scope]) && null !== $this->data[$scope]) {
+        if (isset($this->data[$scope])) {
             return $this->data[$scope];
         }
 
@@ -216,17 +215,16 @@ class CookieStorage implements TargetingStorageInterface
 
     private function updateTimestamps(
         string $scope,
-        \DateTimeInterface $createdAt = null,
-        \DateTimeInterface $updatedAt = null
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null
     ): void {
         $timestamps = $this->normalizeTimestamps($createdAt, $updatedAt);
 
         if (!isset($this->data[$scope][self::STORAGE_KEY_CREATED_AT])) {
             $this->data[$scope][self::STORAGE_KEY_CREATED_AT] = $timestamps['createdAt']->getTimestamp();
-            $this->data[$scope][self::STORAGE_KEY_UPDATED_AT] = $timestamps['updatedAt']->getTimestamp();
-        } else {
-            $this->data[$scope][self::STORAGE_KEY_UPDATED_AT] = $timestamps['updatedAt']->getTimestamp();
         }
+
+        $this->data[$scope][self::STORAGE_KEY_UPDATED_AT] = $timestamps['updatedAt']->getTimestamp();
     }
 
     protected function expiryFor(string $scope): \DateTime|int

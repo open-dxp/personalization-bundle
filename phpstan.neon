@@ -10,9 +10,7 @@ parameters:
         - src/Tests/*
     ignoreErrors:
         - '~^Unsafe usage of new static\(\)~'
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
 
 includes:
-    - vendor/phpstan/phpstan-symfony/extension.neon
+    - ../../vendor/phpstan/phpstan-symfony/extension.neon
     - phpstan-baseline.neon

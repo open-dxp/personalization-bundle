@@ -28,7 +28,6 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
      */
     public function configureOptions(): void
     {
-        /** @var Tool\Targeting\TargetGroup\Listing|Tool\Targeting\TargetGroup\Listing\Dao $list */
         $list = new Tool\Targeting\TargetGroup\Listing();
         $list->setOrder('asc');
         $list->setOrderKey('name');

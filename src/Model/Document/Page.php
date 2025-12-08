@@ -21,7 +21,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Model\Document\Traits\TargetDocumentTra
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\TargetGroup;
 
 /**
- * @method \Pimcore\Bundle\PersonalizationBundle\Model\Document\Page\Dao getDao()
+ * @method \OpenDxp\Bundle\PersonalizationBundle\Model\Document\Page\Dao getDao()
  */
 class Page extends \OpenDxp\Model\Document\Page implements TargetingDocumentInterface
 {
@@ -95,19 +95,18 @@ class Page extends \OpenDxp\Model\Document\Page implements TargetingDocumentInte
     public function getTargetGroups(): array
     {
         $ids = explode(',', $this->targetGroupIds);
-
-        $targetGroups = array_map(function ($id) {
+        $targetGroups = array_map(static function ($id) {
             $id = trim($id);
             if (!empty($id)) {
                 $targetGroup = TargetGroup::getById((int)$id);
-                if ($targetGroup) {
+                if ($targetGroup instanceof TargetGroup) {
                     return $targetGroup;
                 }
             }
+
+            return null;
         }, $ids);
 
-        $targetGroups = array_filter($targetGroups);
-
-        return $targetGroups;
+        return array_filter($targetGroups, static fn (?TargetGroup $targetGroup) => $targetGroup !== null);
     }
 }

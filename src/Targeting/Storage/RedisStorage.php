@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
 
@@ -24,9 +25,9 @@ class RedisStorage implements TargetingStorageInterface
 {
     use TimestampsTrait;
 
-    const STORAGE_KEY_CREATED_AT = '_c';
+    const string STORAGE_KEY_CREATED_AT = '_c';
 
-    const STORAGE_KEY_UPDATED_AT = '_u';
+    const string STORAGE_KEY_UPDATED_AT = '_u';
 
     private \Credis_Client $redis;
 
@@ -123,7 +124,7 @@ class RedisStorage implements TargetingStorageInterface
     /**
      * {@inheritdoc }
      */
-    public function clear(VisitorInfo $visitorInfo, string $scope = null): void
+    public function clear(VisitorInfo $visitorInfo, ?string $scope = null): void
     {
         $scopes = [];
         if (null !== $scope) {
@@ -224,8 +225,8 @@ class RedisStorage implements TargetingStorageInterface
         \Credis_Client $multi,
         string $key,
         int $currentCreatedAt,
-        \DateTimeInterface $createdAt = null,
-        \DateTimeInterface $updatedAt = null
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null
     ): void {
         $timestamps = $this->normalizeTimestamps($createdAt, $updatedAt);
 

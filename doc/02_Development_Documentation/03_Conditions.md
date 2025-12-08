@@ -9,7 +9,7 @@ To implement a condition, you need to implement 2 parts:
   Have a look at [existing implementations](https://github.com/open-dxp/personalization-bundle/tree/1.x/src/Targeting/Condition)
   to get an idea how to implement your own conditions.
 * A frontend JS class defining the admin UI for your condition. You can have a look at [this bundle's conditions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/conditions.js)
-  for UI examples and at the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/conditions.js)
+  for UI examples and at the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/conditions.js)
   as example for a third-party integration.
 
 
@@ -160,7 +160,7 @@ so, create a class extending `opendxp.bundle.personalization.settings.condition.
 `opendxp.bundle.personalization.settings.conditions.register()`. 
 
 Have a look at [this bundle's conditions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/conditions.js)
-and the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/conditions.js)
+and the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/conditions.js)
 for examples.
 
 Start by adding a new JS file implementing the admin UI panel for your condition:
@@ -223,7 +223,7 @@ Start by adding a new JS file implementing the admin UI panel for your condition
 }());
 ```
 
-As soon as you [configured OpenDxp to load the newly created file](https://pimcore.com/docs/platform/Pimcore/Extending_Pimcore/Bundle_Developers_Guide/Loading_Service_Definitions)
+As soon as you [configured OpenDxp to load the newly created file](https://docs.opendxp.io/docs/core-framework/Extending_OpenDxp/Bundle_Developers_Guide/Loading_Service_Definitions)
 you should see your new condition in the list of available conditions:
 
 ![Time of the Day Condition](../img/targeting_custom_condition_timeoftheday.png)

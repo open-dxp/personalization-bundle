@@ -10,7 +10,7 @@ As with conditions, an action handler consists of 2 parts:
   to get an idea how to implement your own action handlers.
 * A frontend JS class defining the admin UI for your action handler as shown on the actions tab of a targeting rule. You
   can have a look at [OpenDxp's core actions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/actions.js)
-  for UI examples and at the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/actions.js)
+  for UI examples and at the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/actions.js)
   as example for a third-party integration.
 
 
@@ -104,7 +104,7 @@ for your action. Create a class extending `opendxp.settings.targeting.action.abs
 calling `opendxp.bundle.personalization.settings.actions.register()`. 
 
 Have a look at [this bundle's actions](https://github.com/open-dxp/personalization-bundle/tree/1.x/public/js/settings/actions.js)
-and the [Customer Management Framework](https://github.com/pimcore/customer-data-framework/blob/master/src/Resources/public/js/pimcore/targeting/actions.js)
+and the [Customer Management Framework](https://github.com/open-dxp/customer-data-framework/tree/1.x/src/Resources/public/js/opendxp/targeting/actions.js)
 for examples.
 
 Start by adding a new JS file implementing the admin UI panel for your action:
@@ -165,7 +165,7 @@ Start by adding a new JS file implementing the admin UI panel for your action:
 }());
 ```
 
-As soon as you [configured OpenDxp to load the newly created file](https://pimcore.com/docs/platform/Pimcore/Extending_Pimcore/Bundle_Developers_Guide/Loading_Service_Definitions)
+As soon as you [configured OpenDxp to load the newly created file](https://docs.opendxp.io/docs/core-framework/Extending_OpenDxp/Bundle_Developers_Guide/Loading_Service_Definitions)
 you should see your new action in the list of available actions:
 
 ![Log Action](../img/targeting_custom_action_log.png)

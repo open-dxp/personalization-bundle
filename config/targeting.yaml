@@ -37,19 +37,19 @@ services:
     # Example for redis
     # opendxp_personalization.targeting.storage.redis.connection:
     #    class: Credis_Client
-    #    factory: [Pimcore\Storage\Redis\ConnectionFactory, createConnection]
+    #    factory: [OpenDxp\Storage\Redis\ConnectionFactory, createConnection]
     #    arguments:
     #        - { server: 127.0.0.1, database: 7 }
 
-    # Pimcore\Bundle\PersonalizationBundle\Targeting\Storage\RedisStorage:
+    # OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\RedisStorage:
     #     arguments:
     #         $redis: '@opendxp_personalization.targeting.storage.redis.connection'
 
     # Example for fallback
-    # Pimcore\Bundle\PersonalizationBundle\Targeting\Storage\FallbackStorage:
+    # OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\FallbackStorage:
     #    arguments:
-    #        $primaryStorage: '@Pimcore\Bundle\PersonalizationBundle\Targeting\Storage\DbStorage'
-    #        $fallbackStorage: '@Pimcore\Bundle\PersonalizationBundle\Targeting\Storage\CookieStorage'
+    #        $primaryStorage: '@OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\DbStorage'
+    #        $fallbackStorage: '@OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\CookieStorage'
 
 
     #

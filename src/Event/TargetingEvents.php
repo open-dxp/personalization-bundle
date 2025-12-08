@@ -23,7 +23,7 @@ final class TargetingEvents
      * Fired when the targeting code is rendered. Allows to add data to the targeting
      * code or to change the template completely.
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\TargetingCodeEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingCodeEvent")
      *
      * @var string
      */
@@ -33,7 +33,7 @@ final class TargetingEvents
      * Fired when the VisitorInfo object was built for a request before
      * any matching and action handling is applied.
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent")
      *
      * @var string
      */
@@ -42,7 +42,7 @@ final class TargetingEvents
     /**
      * Fired after all targeting rules were matched and applied
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent")
      *
      * @var string
      */
@@ -51,7 +51,7 @@ final class TargetingEvents
     /**
      * Fired when a rule matches before any actions are applied
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent")
      *
      * @var string
      */
@@ -60,7 +60,7 @@ final class TargetingEvents
     /**
      * Fired when a rule matches after all actions were applied
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent")
      *
      * @var string
      */
@@ -71,7 +71,7 @@ final class TargetingEvents
      * build the condition in a custom manner instead of relying on the
      * default factory.
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\BuildConditionEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\BuildConditionEvent")
      *
      * @var string
      */
@@ -81,7 +81,7 @@ final class TargetingEvents
      * Fired when a target group which is configured on document settings
      * is assigned to a visitor info.
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\AssignDocumentTargetGroupEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\AssignDocumentTargetGroupEvent")
      *
      * @var string
      */
@@ -101,7 +101,7 @@ final class TargetingEvents
     /**
      * Fired before the targeting debug toolbar is rendered
      *
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Targeting\RenderToolbarEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\RenderToolbarEvent")
      *
      * @var string
      */

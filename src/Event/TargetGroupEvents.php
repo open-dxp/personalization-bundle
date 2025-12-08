@@ -19,21 +19,21 @@ namespace OpenDxp\Bundle\PersonalizationBundle\Event;
 final class TargetGroupEvents
 {
     /**
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
      *
      * @var string
      */
     const POST_ADD = 'opendxp.targetgroup.postAdd';
 
     /**
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
      *
      * @var string
      */
     const POST_UPDATE = 'opendxp.targetgroup.postUpdate';
 
     /**
-     * @Event("Pimcore\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
+     * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
      *
      * @var string
      */

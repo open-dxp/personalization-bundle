@@ -29,7 +29,7 @@ $request = Request::createFromGlobals();
 // request stack available yet
 Tool::setCurrentRequest($request);
 
-/** @var \Pimcore\Kernel $kernel */
+/** @var \OpenDxp\Kernel $kernel */
 $kernel = \OpenDxp\Bootstrap::kernel();
 
 // reset current request - will be read from request stack from now on

@@ -23,7 +23,7 @@ services:
     # Example event listener for objects
     # AppBundle\EventListener\TestListener:
     #     tags:
-    #         - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate, method: onObjectPreUpdate }
+    #         - { name: kernel.event_listener, event: opendxp.dataobject.preUpdate, method: onObjectPreUpdate }
 
     OpenDxp\Bundle\PersonalizationBundle\Installer:
         public: true

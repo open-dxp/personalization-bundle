@@ -108,7 +108,7 @@ class DocumentTargetingConfigurator
             return false;
         }
 
-        // ptg = pimcore target group = will be used from the admin UI to show target specific data
+        // ptg = opendxp target group = will be used from the admin UI to show target specific data
         // in editmode
         if ($ptg = $request->get('_ptg')) {
             $targetGroup = TargetGroup::getById((int)$ptg);

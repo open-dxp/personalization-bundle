@@ -7,7 +7,7 @@ services:
     # TARGETING STORAGE
     #
     # The TargetingStorageInterface alias will be set to whatever service_id is configured
-    # in pimcore_personalization.targeting.service_id. The services below are just the core storages, but
+    # in opendxp_personalization.targeting.service_id. The services below are just the core storages, but
     # it's possible to define a custom service which can be configured via service_id.
     #
 
@@ -25,7 +25,7 @@ services:
             $saveHandler: '@OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Cookie\JWTCookieSaveHandler'
 
     # Session Storage.
-    # If this is used, the pimcore_personalization.targeting.session.enabled entry
+    # If this is used, the opendxp_personalization.targeting.session.enabled entry
     # must be set to true to load the session configurator.
 
     OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\SessionStorage: ~
@@ -35,7 +35,7 @@ services:
     OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\DbStorage: ~
 
     # Example for redis
-    # pimcore_personalization.targeting.storage.redis.connection:
+    # opendxp_personalization.targeting.storage.redis.connection:
     #    class: Credis_Client
     #    factory: [Pimcore\Storage\Redis\ConnectionFactory, createConnection]
     #    arguments:
@@ -43,7 +43,7 @@ services:
 
     # Pimcore\Bundle\PersonalizationBundle\Targeting\Storage\RedisStorage:
     #     arguments:
-    #         $redis: '@pimcore_personalization.targeting.storage.redis.connection'
+    #         $redis: '@opendxp_personalization.targeting.storage.redis.connection'
 
     # Example for fallback
     # Pimcore\Bundle\PersonalizationBundle\Targeting\Storage\FallbackStorage:

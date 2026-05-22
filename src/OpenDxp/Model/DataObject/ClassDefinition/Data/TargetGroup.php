@@ -25,14 +25,12 @@ use OpenDxp\Model\DataObject\ClassDefinition\Service;
 class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
 {
     /**
-     *
-     *
      * @see ResourcePersistenceAwareInterface::getDataFromResource
      */
     #[\Override]
     public function getDataFromResource(
         mixed $data,
-        ?Dataobject\Concrete $object = null,
+        ?DataObject\Concrete $object = null,
         array $params = []
     ): null|string|int {
         if (!empty($data)) {
@@ -47,8 +45,6 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
     }
 
     /**
-     *
-     *
      * @see ResourcePersistenceAwareInterface::getDataForResource
      */
     #[\Override]
@@ -150,9 +146,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
 
     /**
      * @return $this
-     *
      * @internal
-     *
      */
     private function init(): static
     {

@@ -25,7 +25,6 @@ use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent;
 use OpenDxp\Bundle\PersonalizationBundle\Event\TargetingEvents;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\ActionHandlerInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\AssignTargetGroup;
-use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\DelegatingActionHandler;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\ResponseTransformingActionHandlerInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Code\TargetingCodeGenerator;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
@@ -47,8 +46,14 @@ class TargetingListener implements EventSubscriberInterface
     use ResponseInjectionTrait;
     use StaticPageContextAwareTrait;
 
-    public function __construct(private VisitorInfoResolver $visitorInfoResolver, private ActionHandlerInterface|DelegatingActionHandler $actionHandler, private VisitorInfoStorageInterface $visitorInfoStorage, private RequestHelper $requestHelper, private TargetingCodeGenerator $codeGenerator, private TargetingEnableService $targetingEnableService)
-    {
+    public function __construct(
+        private VisitorInfoResolver $visitorInfoResolver,
+        private ActionHandlerInterface $actionHandler,
+        private VisitorInfoStorageInterface $visitorInfoStorage,
+        private RequestHelper $requestHelper,
+        private TargetingCodeGenerator $codeGenerator,
+        private TargetingEnableService $targetingEnableService
+    ) {
     }
 
     public static function getSubscribedEvents(): array

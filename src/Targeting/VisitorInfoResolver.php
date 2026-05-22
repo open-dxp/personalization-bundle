@@ -25,7 +25,6 @@ use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent;
 use OpenDxp\Bundle\PersonalizationBundle\Event\TargetingEvents;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\ActionHandlerInterface;
-use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\DelegatingActionHandler;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\TargetingStorageInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,13 +34,10 @@ class VisitorInfoResolver
 {
     use StopwatchTrait;
 
-    const ATTRIBUTE_VISITOR_INFO = '_visitor_info';
-
-    const STORAGE_KEY_RULE_CONDITION_VARIABLES = 'vi:var';
-
-    const STORAGE_KEY_MATCHED_SESSION_RULES = 'vi:sru'; // visitorInfo:sessionRules
-
-    const STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru';
+    public const string ATTRIBUTE_VISITOR_INFO = '_visitor_info';
+    public const string STORAGE_KEY_RULE_CONDITION_VARIABLES = 'vi:var';
+    public const string STORAGE_KEY_MATCHED_SESSION_RULES = 'vi:sru'; // visitorInfo:sessionRules
+    public const string STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru';
 
     /**
      * @var Rule[]|null
@@ -50,8 +46,14 @@ class VisitorInfoResolver
 
     private ?bool $targetingConfigured = null;
 
-    public function __construct(private TargetingStorageInterface $targetingStorage, private VisitorInfoStorageInterface $visitorInfoStorage, private ConditionMatcherInterface $conditionMatcher, private ActionHandlerInterface|DelegatingActionHandler $actionHandler, private Connection $db, private EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private TargetingStorageInterface $targetingStorage,
+        private VisitorInfoStorageInterface $visitorInfoStorage,
+        private ConditionMatcherInterface $conditionMatcher,
+        private ActionHandlerInterface $actionHandler,
+        private Connection $db,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     public function resolve(Request $request): VisitorInfo

@@ -32,18 +32,10 @@ class GeoIp implements DataProviderInterface
 {
     const PROVIDER_KEY = 'geoip';
 
-    private ProviderInterface $geoIpProvider;
-
-    private LoggerInterface $logger;
-
     private ?CoreCacheHandler $cache = null;
 
-    public function __construct(
-        ProviderInterface $geoIpProvider,
-        LoggerInterface $logger
-    ) {
-        $this->geoIpProvider = $geoIpProvider;
-        $this->logger = $logger;
+    public function __construct(private readonly ProviderInterface $geoIpProvider, private readonly LoggerInterface $logger)
+    {
     }
 
     public function setCache(CoreCacheHandler $cache): void
@@ -88,7 +80,7 @@ class GeoIp implements DataProviderInterface
             return $result;
         }
 
-        $result = $result ?? [];
+        $result ??= [];
 
         if (isset($overrides['country']) && !empty($overrides['country'])) {
             $result['country'] = array_merge($result['country'] ?? [], [
@@ -146,9 +138,7 @@ class GeoIp implements DataProviderInterface
         $data = $city->jsonSerialize();
 
         // remove localized names as we don't need them
-        $filter = function ($key) {
-            return 'names' !== $key;
-        };
+        $filter = (fn($key) => 'names' !== $key);
 
         foreach (array_keys($data) as $section) {
             $data[$section] = array_filter($data[$section], $filter, ARRAY_FILTER_USE_KEY);

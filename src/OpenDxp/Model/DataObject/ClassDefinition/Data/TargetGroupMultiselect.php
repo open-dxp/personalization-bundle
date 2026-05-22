@@ -45,6 +45,7 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         $this->setOptions($options);
     }
 
+    #[\Override]
     public static function __set_state(array $data): static
     {
         $obj = parent::__set_state($data);
@@ -55,6 +56,7 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         return $obj;
     }
 
+    #[\Override]
     public function jsonSerialize(): mixed
     {
         if (Service::doRemoveDynamicOptions()) {
@@ -64,6 +66,7 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         return parent::jsonSerialize();
     }
 
+    #[\Override]
     public function resolveBlockedVars(): array
     {
         $blockedVars = parent::resolveBlockedVars();
@@ -72,6 +75,7 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         return $blockedVars;
     }
 
+    #[\Override]
     public function getFieldType(): string
     {
         return 'targetGroupMultiselect';

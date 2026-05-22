@@ -28,28 +28,12 @@ use OpenDxp\Security\User\UserLoader;
 
 class DocumentTargetingConfigurator
 {
-    private VisitorInfoStorageInterface $visitorInfoStorage;
-
-    private RequestHelper $requestHelper;
-
-    private UserLoader $userLoader;
-
-    private CoreCacheHandler $cache;
-
     private array $targetGroupMapping = [];
 
     private ?TargetGroup $overrideTargetGroup = null;
 
-    public function __construct(
-        VisitorInfoStorageInterface $visitorInfoStorage,
-        RequestHelper $requestHelper,
-        UserLoader $userLoader,
-        CoreCacheHandler $cache
-    ) {
-        $this->visitorInfoStorage = $visitorInfoStorage;
-        $this->requestHelper = $requestHelper;
-        $this->userLoader = $userLoader;
-        $this->cache = $cache;
+    public function __construct(private readonly VisitorInfoStorageInterface $visitorInfoStorage, private readonly RequestHelper $requestHelper, private readonly UserLoader $userLoader, private readonly CoreCacheHandler $cache)
+    {
     }
 
     /**
@@ -138,11 +122,7 @@ class DocumentTargetingConfigurator
 
     public function getConfiguredTargetGroup(Document $document): ?TargetGroup
     {
-        if (isset($this->targetGroupMapping[$document->getId()])) {
-            return $this->targetGroupMapping[$document->getId()];
-        }
-
-        return null;
+        return $this->targetGroupMapping[$document->getId()] ?? null;
     }
 
     public function getResolvedTargetGroupMapping(): array
@@ -208,9 +188,7 @@ class DocumentTargetingConfigurator
         }
 
         $targetGroups = array_unique($targetGroups);
-        $targetGroups = array_filter($targetGroups, function ($id) {
-            return TargetGroup::isIdActive($id);
-        });
+        $targetGroups = array_filter($targetGroups, fn($id) => TargetGroup::isIdActive($id));
 
         $this->cache->save($cacheKey, $targetGroups, [sprintf('document_%d', $document->getId()), 'target_groups']);
 

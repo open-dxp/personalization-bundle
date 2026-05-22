@@ -21,18 +21,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TargetGroupEvent extends Event
 {
-    protected TargetGroup $targetGroup;
-
-    protected array $arguments;
-
     /**
      * TargetGroupEvent constructor.
      *
      */
-    public function __construct(TargetGroup $targetGroup, array $arguments = [])
+    public function __construct(protected TargetGroup $targetGroup, protected array $arguments = [])
     {
-        $this->targetGroup = $targetGroup;
-        $this->arguments = $arguments;
     }
 
     public function getTargetGroup(): TargetGroup

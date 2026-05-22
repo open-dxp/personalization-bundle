@@ -23,25 +23,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 class TargetingCodeEvent extends Event
 {
     /**
-     * @var CodeBlock[]
-     */
-    private array $blocks;
-
-    private string $template;
-
-    private array $data;
-
-    /**
      * @param CodeBlock[] $blocks
      */
-    public function __construct(
-        string $template,
-        array $blocks,
-        array $data
-    ) {
-        $this->template = $template;
-        $this->blocks = $blocks;
-        $this->data = $data;
+    public function __construct(private string $template, private array $blocks, private array $data)
+    {
     }
 
     public function getTemplate(): string

@@ -30,12 +30,6 @@ class VisitorInfo implements \IteratorAggregate
 
     const ACTION_SCOPE_RESPONSE = 'response';
 
-    private Request $request;
-
-    private ?string $visitorId = null;
-
-    private ?string $sessionId = null;
-
     /**
      * Matched targeting rules
      *
@@ -76,11 +70,8 @@ class VisitorInfo implements \IteratorAggregate
 
     private ?Response $response = null;
 
-    public function __construct(Request $request, ?string $visitorId = null, ?string $sessionId = null)
+    public function __construct(private readonly Request $request, private readonly ?string $visitorId = null, private readonly ?string $sessionId = null)
     {
-        $this->request = $request;
-        $this->visitorId = $visitorId;
-        $this->sessionId = $sessionId;
     }
 
     public static function fromRequest(Request $request): static
@@ -170,12 +161,7 @@ class VisitorInfo implements \IteratorAggregate
         usort($assignments, function (TargetGroupAssignment $a, TargetGroupAssignment $b) {
             $aCount = $a->getCount();
             $bCount = $b->getCount();
-
-            if ($aCount === $bCount) {
-                return 0;
-            }
-
-            return $aCount < $bCount ? 1 : -1;
+            return $bCount <=> $aCount;
         });
 
         $this->sortedTargetGroupAssignments = $assignments;
@@ -231,9 +217,7 @@ class VisitorInfo implements \IteratorAggregate
     public function getAssignedTargetGroups(): array
     {
         if (null === $this->targetGroups) {
-            $this->targetGroups = array_map(function (TargetGroupAssignment $assignment) {
-                return $assignment->getTargetGroup();
-            }, $this->getTargetGroupAssignments());
+            $this->targetGroups = array_map(fn(TargetGroupAssignment $assignment) => $assignment->getTargetGroup(), $this->getTargetGroupAssignments());
         }
 
         return $this->targetGroups;

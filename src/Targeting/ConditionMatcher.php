@@ -28,30 +28,10 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class ConditionMatcher implements ConditionMatcherInterface
 {
-    private ConditionFactoryInterface $conditionFactory;
-
-    private DataLoaderInterface $dataLoader;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    private ExpressionLanguage $expressionLanguage;
-
-    private LoggerInterface $logger;
-
     private array $collectedVariables = [];
 
-    public function __construct(
-        ConditionFactoryInterface $conditionFactory,
-        DataLoaderInterface $dataLoader,
-        EventDispatcherInterface $eventDispatcher,
-        ExpressionLanguage $expressionLanguage,
-        LoggerInterface $logger
-    ) {
-        $this->conditionFactory = $conditionFactory;
-        $this->dataLoader = $dataLoader;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->expressionLanguage = $expressionLanguage;
-        $this->logger = $logger;
+    public function __construct(private readonly ConditionFactoryInterface $conditionFactory, private readonly DataLoaderInterface $dataLoader, private readonly EventDispatcherInterface $eventDispatcher, private readonly ExpressionLanguage $expressionLanguage, private readonly LoggerInterface $logger)
+    {
     }
 
     public function match(VisitorInfo $visitorInfo, array $conditions, bool $collectVariables = false): bool

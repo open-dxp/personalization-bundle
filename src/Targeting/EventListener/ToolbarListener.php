@@ -43,40 +43,8 @@ class ToolbarListener implements EventSubscriberInterface
 {
     use OpenDxpContextAwareTrait;
 
-    private VisitorInfoStorageInterface $visitorInfoStorage;
-
-    private DocumentResolver $documentResolver;
-
-    private TargetingDataCollector $targetingDataCollector;
-
-    private OverrideHandler $overrideHandler;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    private Environment $twig;
-
-    private CodeInjector $codeInjector;
-
-    private TargetingEnableService $targetingEnableService;
-
-    public function __construct(
-        VisitorInfoStorageInterface $visitorInfoStorage,
-        DocumentResolver $documentResolver,
-        TargetingDataCollector $targetingDataCollector,
-        OverrideHandler $overrideHandler,
-        EventDispatcherInterface $eventDispatcher,
-        Environment $twig,
-        CodeInjector $codeInjector,
-        TargetingEnableService $targetingEnableService
-    ) {
-        $this->visitorInfoStorage = $visitorInfoStorage;
-        $this->documentResolver = $documentResolver;
-        $this->targetingDataCollector = $targetingDataCollector;
-        $this->overrideHandler = $overrideHandler;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->twig = $twig;
-        $this->codeInjector = $codeInjector;
-        $this->targetingEnableService = $targetingEnableService;
+    public function __construct(private VisitorInfoStorageInterface $visitorInfoStorage, private DocumentResolver $documentResolver, private TargetingDataCollector $targetingDataCollector, private OverrideHandler $overrideHandler, private EventDispatcherInterface $eventDispatcher, private Environment $twig, private CodeInjector $codeInjector, private TargetingEnableService $targetingEnableService)
+    {
     }
 
     /**

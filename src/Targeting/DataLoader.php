@@ -26,11 +26,8 @@ class DataLoader implements DataLoaderInterface
 {
     use StopwatchTrait;
 
-    private ContainerInterface $dataProviders;
-
-    public function __construct(ContainerInterface $dataProviders)
+    public function __construct(private ContainerInterface $dataProviders)
     {
-        $this->dataProviders = $dataProviders;
     }
 
     public function loadDataFromProviders(VisitorInfo $visitorInfo, array|string $providerKeys): void

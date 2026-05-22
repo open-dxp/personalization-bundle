@@ -29,6 +29,7 @@ class Installer extends SettingsStoreAwareInstaller
         'targeting',
     ];
 
+    #[\Override]
     public function install(): void
     {
         $this->installDatabaseTable();
@@ -36,6 +37,7 @@ class Installer extends SettingsStoreAwareInstaller
         parent::install();
     }
 
+    #[\Override]
     public function uninstall(): void
     {
         // Cleanup should be done manually

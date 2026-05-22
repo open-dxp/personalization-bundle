@@ -24,11 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CodeSnippet implements ActionHandlerInterface, ResponseTransformingActionHandlerInterface
 {
-    private CodeInjector $codeInjector;
-
-    public function __construct(CodeInjector $codeInjector)
+    public function __construct(private readonly CodeInjector $codeInjector)
     {
-        $this->codeInjector = $codeInjector;
     }
 
     public function apply(VisitorInfo $visitorInfo, array $action, ?Rule $rule = null): void

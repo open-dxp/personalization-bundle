@@ -27,11 +27,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DocumentTargetingOverrideHandler implements OverrideHandlerInterface
 {
-    private DocumentTargetingConfigurator $documentTargetingConfigurator;
-
-    public function __construct(DocumentTargetingConfigurator $documentTargetingConfigurator)
+    public function __construct(private readonly DocumentTargetingConfigurator $documentTargetingConfigurator)
     {
-        $this->documentTargetingConfigurator = $documentTargetingConfigurator;
     }
 
     public function buildOverrideForm(FormBuilderInterface $form, Request $request): void
@@ -39,15 +36,9 @@ class DocumentTargetingOverrideHandler implements OverrideHandlerInterface
         $form->add('documentTargetGroup', ChoiceType::class, [
             'label' => 'Document Target Group',
             'required' => false,
-            'choice_loader' => new CallbackChoiceLoader(function () {
-                return (new TargetGroup\Listing())->load();
-            }),
-            'choice_value' => function (?TargetGroup $targetGroup = null) {
-                return $targetGroup ? $targetGroup->getId() : '';
-            },
-            'choice_label' => function (?TargetGroup $targetGroup = null) {
-                return $targetGroup ? $targetGroup->getName() : '';
-            },
+            'choice_loader' => new CallbackChoiceLoader(fn() => (new TargetGroup\Listing())->load()),
+            'choice_value' => fn(?TargetGroup $targetGroup = null) => $targetGroup ? $targetGroup->getId() : '',
+            'choice_label' => fn(?TargetGroup $targetGroup = null) => $targetGroup ? $targetGroup->getName() : '',
         ]);
     }
 

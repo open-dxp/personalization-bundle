@@ -47,7 +47,7 @@ class TargetGroup extends Model\AbstractModel
             $targetGroup->getDao()->getById((int)$id);
 
             return $targetGroup;
-        } catch (Model\Exception\NotFoundException $e) {
+        } catch (Model\Exception\NotFoundException) {
             return null;
         }
     }
@@ -59,7 +59,7 @@ class TargetGroup extends Model\AbstractModel
             $target->getDao()->getByName($name);
 
             return $target;
-        } catch (Model\Exception\NotFoundException $e) {
+        } catch (Model\Exception\NotFoundException) {
             return null;
         }
     }

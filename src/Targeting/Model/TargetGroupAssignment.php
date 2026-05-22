@@ -21,14 +21,10 @@ use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\TargetGroup;
 
 class TargetGroupAssignment
 {
-    private TargetGroup $targetGroup;
-
     private int $count = 1;
 
-    public function __construct(TargetGroup $targetGroup, int $count = 1)
+    public function __construct(private readonly TargetGroup $targetGroup, int $count = 1)
     {
-        $this->targetGroup = $targetGroup;
-
         $this->setCount($count);
     }
 

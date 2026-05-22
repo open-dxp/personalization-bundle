@@ -21,19 +21,13 @@ namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Code;
  * Represents a single template block. Parts are represented as array and concatenated
  * with newlines on render.
  */
-final class CodeBlock
+final class CodeBlock implements \Stringable
 {
-    /**
-     * @var string[]
-     */
-    private array $parts = [];
-
     /**
      * @param string[] $parts
      */
-    public function __construct(array $parts = [])
+    public function __construct(private array $parts = [])
     {
-        $this->parts = $parts;
     }
 
     /**

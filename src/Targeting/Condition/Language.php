@@ -23,11 +23,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Language extends AbstractVariableCondition implements ConditionInterface
 {
-    private ?string $language = null;
-
-    public function __construct(?string $language = null)
+    public function __construct(private readonly ?string $language = null)
     {
-        $this->language = $language;
     }
 
     public static function fromConfig(array $config): static
@@ -56,7 +53,7 @@ class Language extends AbstractVariableCondition implements ConditionInterface
         }
 
         // only check the language without territory if configured
-        if (false === strpos($this->language, '_') && false !== strpos($language, '_')) {
+        if (!str_contains((string) $this->language, '_') && str_contains($language, '_')) {
             $normalizedLanguage = explode('_', $language)[0];
 
             if ($normalizedLanguage === $this->language) {

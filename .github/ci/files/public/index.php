@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -15,20 +14,15 @@ declare(strict_types=1);
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
-namespace OpenDxp\Bundle\PersonalizationBundle\Event\Targeting;
+use OpenDxp\Bootstrap;
 
-use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
-use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
+require_once dirname(__DIR__) . '/vendor/autoload_runtime.php';
 
-class TargetingRuleEvent extends TargetingEvent
-{
-    public function __construct(VisitorInfo $visitorInfo, private readonly Rule $rule)
-    {
-        parent::__construct($visitorInfo);
-    }
+Bootstrap::setProjectRoot();
 
-    public function getRule(): Rule
-    {
-        return $this->rule;
-    }
-}
+return static function () {
+
+    Bootstrap::bootstrap();
+
+    return Bootstrap::kernel();
+};

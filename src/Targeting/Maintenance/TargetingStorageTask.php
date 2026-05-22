@@ -23,11 +23,8 @@ use OpenDxp\Maintenance\TaskInterface;
 
 class TargetingStorageTask implements TaskInterface
 {
-    private TargetingStorageInterface $targetingStorage;
-
-    public function __construct(TargetingStorageInterface $targetingStorage)
+    public function __construct(private readonly TargetingStorageInterface $targetingStorage)
     {
-        $this->targetingStorage = $targetingStorage;
     }
 
     public function execute(): void

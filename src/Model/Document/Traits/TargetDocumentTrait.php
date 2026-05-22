@@ -63,7 +63,7 @@ trait TargetDocumentTrait
         }
 
         $prefix = $this->getTargetGroupEditablePrefix();
-        if (!preg_match('/^' . preg_quote($prefix, '/') . '/', $name)) {
+        if (!preg_match('/^' . preg_quote((string) $prefix, '/') . '/', $name)) {
             $name = $prefix . $name;
         }
 

@@ -23,11 +23,8 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class Country extends AbstractVariableCondition implements DataProviderDependentInterface
 {
-    private ?string $country = null;
-
-    public function __construct(?string $country = null)
+    public function __construct(private readonly ?string $country = null)
     {
-        $this->country = $country;
     }
 
     public static function fromConfig(array $config): static

@@ -30,7 +30,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class TargetingDocumentRendererListener implements EventSubscriberInterface
 {
     public function __construct(
-        private DocumentTargetingConfigurator $targetingConfigurator,
+        private readonly DocumentTargetingConfigurator $targetingConfigurator,
         protected DocumentResolver $documentResolver
     ) {
     }

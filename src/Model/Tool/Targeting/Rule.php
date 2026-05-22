@@ -86,7 +86,7 @@ class Rule extends Model\AbstractModel
             $target->getDao()->getById((int)$id);
 
             return $target;
-        } catch (Model\Exception\NotFoundException $e) {
+        } catch (Model\Exception\NotFoundException) {
             return null;
         }
     }
@@ -103,7 +103,7 @@ class Rule extends Model\AbstractModel
             $target->getDao()->getByName($name);
 
             return $target;
-        } catch (Model\Exception\NotFoundException $e) {
+        } catch (Model\Exception\NotFoundException) {
             return null;
         }
     }

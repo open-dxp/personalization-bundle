@@ -25,19 +25,18 @@ use OpenDxp\Model\DataObject\ClassDefinition\Service;
 class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
 {
     /**
-     *
-     *
      * @see ResourcePersistenceAwareInterface::getDataFromResource
      */
+    #[\Override]
     public function getDataFromResource(
         mixed $data,
-        ?Dataobject\Concrete $object = null,
+        ?DataObject\Concrete $object = null,
         array $params = []
     ): null|string|int {
         if (!empty($data)) {
             try {
                 $this->checkValidity($data, true, $params);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $data = null;
             }
         }
@@ -46,10 +45,9 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
     }
 
     /**
-     *
-     *
      * @see ResourcePersistenceAwareInterface::getDataForResource
      */
+    #[\Override]
     public function getDataForResource(
         mixed $data,
         ?DataObject\Concrete $object = null,
@@ -59,7 +57,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         if (!empty($data)) {
             try {
                 $this->checkValidity($data, true, $params);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 $data = null;
             }
         }
@@ -89,6 +87,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         $this->setOptions($options);
     }
 
+    #[\Override]
     public function checkValidity(mixed $data, bool $omitMandatoryCheck = false, array $params = []): void
     {
         if (!$omitMandatoryCheck && $this->getMandatory() && empty($data)) {
@@ -104,6 +103,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         }
     }
 
+    #[\Override]
     public static function __set_state(array $data): static
     {
         $obj = parent::__set_state($data);
@@ -114,6 +114,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         return $obj;
     }
 
+    #[\Override]
     public function jsonSerialize(): mixed
     {
         if (Service::doRemoveDynamicOptions()) {
@@ -123,6 +124,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         return parent::jsonSerialize();
     }
 
+    #[\Override]
     public function resolveBlockedVars(): array
     {
         $blockedVars = parent::resolveBlockedVars();
@@ -131,6 +133,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         return $blockedVars;
     }
 
+    #[\Override]
     public function getFieldType(): string
     {
         return 'targetGroup';
@@ -143,9 +146,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
 
     /**
      * @return $this
-     *
      * @internal
-     *
      */
     private function init(): static
     {

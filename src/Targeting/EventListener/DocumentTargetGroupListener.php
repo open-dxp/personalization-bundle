@@ -22,7 +22,6 @@ use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent;
 use OpenDxp\Bundle\PersonalizationBundle\Event\TargetingEvents;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Document\Page;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\ActionHandlerInterface;
-use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\DelegatingActionHandler;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\StaticRoutesBundle\Model\Staticroute;
 use OpenDxp\Http\Request\Resolver\DocumentResolver;
@@ -37,20 +36,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class DocumentTargetGroupListener implements EventSubscriberInterface
 {
-    private DocumentResolver $documentResolver;
-
-    private ActionHandlerInterface|DelegatingActionHandler $actionHandler;
-
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        DocumentResolver $documentResolver,
-        ActionHandlerInterface $actionHandler,
-        EventDispatcherInterface $eventDispatcher
+        private readonly DocumentResolver $documentResolver,
+        private readonly ActionHandlerInterface $actionHandler,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->documentResolver = $documentResolver;
-        $this->actionHandler = $actionHandler;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

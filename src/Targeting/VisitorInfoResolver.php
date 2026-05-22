@@ -25,7 +25,6 @@ use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent;
 use OpenDxp\Bundle\PersonalizationBundle\Event\TargetingEvents;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\ActionHandlerInterface;
-use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\DelegatingActionHandler;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\TargetingStorageInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,25 +34,10 @@ class VisitorInfoResolver
 {
     use StopwatchTrait;
 
-    const ATTRIBUTE_VISITOR_INFO = '_visitor_info';
-
-    const STORAGE_KEY_RULE_CONDITION_VARIABLES = 'vi:var';
-
-    const STORAGE_KEY_MATCHED_SESSION_RULES = 'vi:sru'; // visitorInfo:sessionRules
-
-    const STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru'; // visitorInfo:visitorRules
-
-    private TargetingStorageInterface $targetingStorage;
-
-    private VisitorInfoStorageInterface $visitorInfoStorage;
-
-    private ConditionMatcherInterface $conditionMatcher;
-
-    private ActionHandlerInterface|DelegatingActionHandler $actionHandler;
-
-    private Connection $db;
-
-    private EventDispatcherInterface $eventDispatcher;
+    public const string ATTRIBUTE_VISITOR_INFO = '_visitor_info';
+    public const string STORAGE_KEY_RULE_CONDITION_VARIABLES = 'vi:var';
+    public const string STORAGE_KEY_MATCHED_SESSION_RULES = 'vi:sru'; // visitorInfo:sessionRules
+    public const string STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru';
 
     /**
      * @var Rule[]|null
@@ -63,19 +47,13 @@ class VisitorInfoResolver
     private ?bool $targetingConfigured = null;
 
     public function __construct(
-        TargetingStorageInterface $targetingStorage,
-        VisitorInfoStorageInterface $visitorInfoStorage,
-        ConditionMatcherInterface $conditionMatcher,
-        ActionHandlerInterface $actionHandler,
-        Connection $db,
-        EventDispatcherInterface $eventDispatcher
+        private TargetingStorageInterface $targetingStorage,
+        private VisitorInfoStorageInterface $visitorInfoStorage,
+        private ConditionMatcherInterface $conditionMatcher,
+        private ActionHandlerInterface $actionHandler,
+        private Connection $db,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->targetingStorage = $targetingStorage;
-        $this->visitorInfoStorage = $visitorInfoStorage;
-        $this->conditionMatcher = $conditionMatcher;
-        $this->actionHandler = $actionHandler;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->db = $db;
     }
 
     public function resolve(Request $request): VisitorInfo
@@ -113,7 +91,7 @@ class VisitorInfoResolver
 
         try {
             $configuredRules = $this->db->fetchOne('SELECT id FROM targeting_target_groups UNION SELECT id FROM targeting_rules LIMIT 1');
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return false;
         }
 

@@ -27,11 +27,11 @@
         "open-dxp/admin-bundle": "^1.0"
     },
     "require-dev": {
-        "symfony/dotenv": "^7.3",
-        "symfony/runtime": "^7.3",
+        "symfony/dotenv": "^7.4",
+        "symfony/runtime": "^7.4",
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^2.0",
-        "phpstan/phpstan-symfony": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0.14",
         "codeception/codeception": "^5.3.5",
         "codeception/module-asserts": "^2",
         "codeception/module-symfony": "^3.1.1"

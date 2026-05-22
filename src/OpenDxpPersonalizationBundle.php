@@ -41,6 +41,7 @@ class OpenDxpPersonalizationBundle extends AbstractOpenDxpBundle implements Open
        return 'open-dxp/personalization-bundle';
     }*/
 
+    #[\Override]
     public function getContainerExtension(): ?ExtensionInterface
     {
         if ($this->extension === null) {
@@ -91,6 +92,7 @@ class OpenDxpPersonalizationBundle extends AbstractOpenDxpBundle implements Open
         $container->addCompilerPass(new DebugStopwatchPass());
     }
 
+    #[\Override]
     public function getPath(): string
     {
         return \dirname(__DIR__);

@@ -23,16 +23,9 @@ use OpenDxp\Model\Document;
 
 class AssignDocumentTargetGroupEvent extends TargetingEvent
 {
-    private Document $document;
-
-    private TargetGroup $targetGroup;
-
-    public function __construct(VisitorInfo $visitorInfo, Document $document, TargetGroup $targetGroup)
+    public function __construct(VisitorInfo $visitorInfo, private readonly Document $document, private readonly TargetGroup $targetGroup)
     {
         parent::__construct($visitorInfo);
-
-        $this->document = $document;
-        $this->targetGroup = $targetGroup;
     }
 
     public function getDocument(): Document

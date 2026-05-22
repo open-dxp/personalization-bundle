@@ -24,47 +24,37 @@ final class TargetingEvents
      * code or to change the template completely.
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingCodeEvent")
-     *
-     * @var string
      */
-    const TARGETING_CODE = 'opendxp.targeting.targeting_code';
+    const string TARGETING_CODE = 'opendxp.targeting.targeting_code';
 
     /**
      * Fired when the VisitorInfo object was built for a request before
      * any matching and action handling is applied.
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent")
-     *
-     * @var string
      */
-    const PRE_RESOLVE = 'opendxp.targeting.pre_resolve';
+    const string PRE_RESOLVE = 'opendxp.targeting.pre_resolve';
 
     /**
      * Fired after all targeting rules were matched and applied
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent")
-     *
-     * @var string
      */
-    const POST_RESOLVE = 'opendxp.targeting.post_resolve';
+    const string POST_RESOLVE = 'opendxp.targeting.post_resolve';
 
     /**
      * Fired when a rule matches before any actions are applied
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent")
-     *
-     * @var string
      */
-    const PRE_RULE_ACTIONS = 'opendxp.targeting.pre_rule_actions';
+    const string PRE_RULE_ACTIONS = 'opendxp.targeting.pre_rule_actions';
 
     /**
      * Fired when a rule matches after all actions were applied
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingRuleEvent")
-     *
-     * @var string
      */
-    const POST_RULE_ACTIONS = 'opendxp.targeting.post_rule_actions';
+    const string POST_RULE_ACTIONS = 'opendxp.targeting.post_rule_actions';
 
     /**
      * Fired when a targeting condition is about to be built. Allows to
@@ -72,20 +62,16 @@ final class TargetingEvents
      * default factory.
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\BuildConditionEvent")
-     *
-     * @var string
      */
-    const BUILD_CONDITION = 'opendxp.targeting.build_condition';
+    const string BUILD_CONDITION = 'opendxp.targeting.build_condition';
 
     /**
      * Fired when a target group which is configured on document settings
      * is assigned to a visitor info.
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\AssignDocumentTargetGroupEvent")
-     *
-     * @var string
      */
-    const ASSIGN_DOCUMENT_TARGET_GROUP = 'opendxp.targeting.assign_document_target_group';
+    const string ASSIGN_DOCUMENT_TARGET_GROUP = 'opendxp.targeting.assign_document_target_group';
 
     /**
      * Fired after a condition was used which depends on the count of visited
@@ -93,17 +79,13 @@ final class TargetingEvents
      * if there are conditions depending on it.
      *
      * @Event("Symfony\Component\EventDispatcher\GenericEvent")
-     *
-     * @var string
      */
-    const VISITED_PAGES_COUNT_MATCH = 'opendxp.targeting.visited_pages_count_match';
+    const string VISITED_PAGES_COUNT_MATCH = 'opendxp.targeting.visited_pages_count_match';
 
     /**
      * Fired before the targeting debug toolbar is rendered
      *
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\RenderToolbarEvent")
-     *
-     * @var string
      */
-    const RENDER_TOOLBAR = 'opendxp.targeting.render_toolbar';
+    const string RENDER_TOOLBAR = 'opendxp.targeting.render_toolbar';
 }

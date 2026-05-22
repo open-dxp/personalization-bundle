@@ -23,8 +23,6 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class HardwarePlatform extends AbstractVariableCondition implements DataProviderDependentInterface
 {
-    private ?string $platform = null;
-
     /**
      * Mapping from admin UI values to DeviceDetector results. If value
      * is an array, in_array is used to determine match.
@@ -36,9 +34,8 @@ class HardwarePlatform extends AbstractVariableCondition implements DataProvider
         'feature phone' => 'mobile',
     ];
 
-    public function __construct(?string $platform = null)
+    public function __construct(private readonly ?string $platform = null)
     {
-        $this->platform = $platform;
     }
 
     public static function fromConfig(array $config): static

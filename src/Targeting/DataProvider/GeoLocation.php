@@ -33,16 +33,8 @@ class GeoLocation implements DataProviderInterface
 
     const COOKIE_NAME_GEOLOCATION = '_pc_tgl';
 
-    private GeoIp $geoIpDataProvider;
-
-    private LoggerInterface $logger;
-
-    public function __construct(
-        GeoIp $geoIpProvider,
-        LoggerInterface $logger
-    ) {
-        $this->geoIpDataProvider = $geoIpProvider;
-        $this->logger = $logger;
+    public function __construct(private readonly GeoIp $geoIpDataProvider, private readonly LoggerInterface $logger)
+    {
     }
 
     public function load(VisitorInfo $visitorInfo): void
@@ -63,9 +55,7 @@ class GeoLocation implements DataProviderInterface
             return $location;
         }
 
-        $overrides = array_filter($overrides, function ($key) {
-            return in_array($key, ['latitude', 'longitude', 'altitude']);
-        }, ARRAY_FILTER_USE_KEY);
+        $overrides = array_filter($overrides, fn($key) => in_array($key, ['latitude', 'longitude', 'altitude']), ARRAY_FILTER_USE_KEY);
 
         $data = array_merge([
             'latitude' => $location ? $location->getLatitude() : null,

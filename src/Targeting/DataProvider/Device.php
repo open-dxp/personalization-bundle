@@ -33,8 +33,6 @@ class Device implements DataProviderInterface
 {
     const PROVIDER_KEY = 'device';
 
-    private LoggerInterface $logger;
-
     /**
      * The cache handler caching detected results
      *
@@ -47,9 +45,8 @@ class Device implements DataProviderInterface
      */
     private ?TagAwareAdapterInterface $cachePool = null;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(private readonly LoggerInterface $logger)
     {
-        $this->logger = $logger;
     }
 
     public function setCache(CoreCacheHandler $cache): void
@@ -86,7 +83,7 @@ class Device implements DataProviderInterface
             return $result;
         }
 
-        $result = $result ?? [];
+        $result ??= [];
 
         if (isset($overrides['hardwarePlatform']) && !empty($overrides['hardwarePlatform'])) {
             $result['device'] = array_merge($result['device'] ?? [], [

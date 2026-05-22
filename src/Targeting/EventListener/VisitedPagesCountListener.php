@@ -24,13 +24,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class VisitedPagesCountListener implements EventSubscriberInterface
 {
-    private VisitedPagesCounter $visitedPagesCounter;
-
     private bool $recordPageCount = false;
 
-    public function __construct(VisitedPagesCounter $visitedPagesCounter)
+    public function __construct(private readonly VisitedPagesCounter $visitedPagesCounter)
     {
-        $this->visitedPagesCounter = $visitedPagesCounter;
     }
 
     public static function getSubscribedEvents(): array

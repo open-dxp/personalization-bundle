@@ -23,11 +23,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TargetingEvent extends Event
 {
-    protected VisitorInfo $visitorInfo;
-
-    public function __construct(VisitorInfo $visitorInfo)
+    public function __construct(protected VisitorInfo $visitorInfo)
     {
-        $this->visitorInfo = $visitorInfo;
     }
 
     public function getVisitorInfo(): VisitorInfo

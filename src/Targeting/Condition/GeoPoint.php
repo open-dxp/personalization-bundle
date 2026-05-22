@@ -26,17 +26,8 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class GeoPoint extends AbstractVariableCondition implements DataProviderDependentInterface
 {
-    private ?float $latitude = null;
-
-    private ?float $longitude = null;
-
-    private ?int $radius = null;
-
-    public function __construct(?float $latitude = null, ?float $longitude = null, ?int $radius = null)
+    public function __construct(private readonly ?float $latitude = null, private readonly ?float $longitude = null, private readonly ?int $radius = null)
     {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->radius = $radius;
     }
 
     public static function fromConfig(array $config): static

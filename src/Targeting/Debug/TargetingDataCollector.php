@@ -31,21 +31,13 @@ class TargetingDataCollector
 {
     use StopwatchTrait;
 
-    private TargetingStorageInterface $targetingStorage;
-
-    private DocumentTargetingConfigurator $targetingConfigurator;
-
     private array $filteredVisitorInfoDataObjecKeys = [
         TargetingStorage::PROVIDER_KEY,
         VisitedPagesCounter::PROVIDER_KEY,
     ];
 
-    public function __construct(
-        TargetingStorageInterface $targetingStorage,
-        DocumentTargetingConfigurator $targetingConfigurator
-    ) {
-        $this->targetingStorage = $targetingStorage;
-        $this->targetingConfigurator = $targetingConfigurator;
+    public function __construct(private TargetingStorageInterface $targetingStorage, private DocumentTargetingConfigurator $targetingConfigurator)
+    {
     }
 
     public function collectVisitorInfo(VisitorInfo $visitorInfo): array
@@ -110,7 +102,7 @@ class TargetingDataCollector
                 try {
                     $event = $this->stopwatch->getEvent(sprintf('Targeting:match:%s', $rule->getName()));
                     $duration = $event->getDuration();
-                } catch (\Throwable $e) {
+                } catch (\Throwable) {
                     // noop
                 }
             }

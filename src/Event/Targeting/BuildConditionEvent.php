@@ -22,19 +22,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class BuildConditionEvent extends Event
 {
-    private string $type;
-
-    private string $class;
-
-    private array $config;
-
     private ?ConditionInterface $condition = null;
 
-    public function __construct(string $type, string $class, array $config)
+    public function __construct(private readonly string $type, private readonly string $class, private readonly array $config)
     {
-        $this->type = $type;
-        $this->class = $class;
-        $this->config = $config;
     }
 
     public function getType(): string

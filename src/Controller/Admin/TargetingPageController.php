@@ -62,11 +62,13 @@ class TargetingPageController extends PageController
      * @throws \Exception
      */
     #[Route('/save', name: 'opendxp_admin_document_page_save', methods: ['PUT', 'POST'])]
+    #[\Override]
     public function saveAction(Request $request, StaticPageGenerator $staticPageGenerator): JsonResponse
     {
         return parent::saveAction($request, $staticPageGenerator);
     }
 
+    #[\Override]
     protected function addDataToDocument(Request $request, Document $document): void
     {
         if ($document instanceof Document\PageSnippet) {

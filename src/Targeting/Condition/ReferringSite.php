@@ -21,11 +21,8 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class ReferringSite extends AbstractVariableCondition implements ConditionInterface
 {
-    private ?string $pattern = null;
-
-    public function __construct(?string $pattern = null)
+    public function __construct(private readonly ?string $pattern = null)
     {
-        $this->pattern = $pattern;
     }
 
     public static function fromConfig(array $config): static
@@ -43,7 +40,7 @@ class ReferringSite extends AbstractVariableCondition implements ConditionInterf
         $request = $visitorInfo->getRequest();
         $referrer = $request->headers->get('Referer', 'direct');
 
-        $result = preg_match($this->pattern, $referrer);
+        $result = preg_match($this->pattern, (string) $referrer);
         if ($result) {
             $this->setMatchedVariable('referrer', $referrer);
 

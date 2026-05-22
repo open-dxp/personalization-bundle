@@ -27,7 +27,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class TargetingFullPageCacheListener extends FullPageCacheListener
 {
     public function __construct(
-        private VisitorInfoStorageInterface $visitorInfoStorage,
+        private readonly VisitorInfoStorageInterface $visitorInfoStorage,
         SessionStatus $sessionStatus,
         EventDispatcherInterface $eventDispatcher,
         Config $config
@@ -35,6 +35,7 @@ class TargetingFullPageCacheListener extends FullPageCacheListener
         parent::__construct($sessionStatus, $eventDispatcher, $config);
     }
 
+    #[\Override]
     public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMainRequest()) {

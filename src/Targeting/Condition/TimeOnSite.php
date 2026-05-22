@@ -24,7 +24,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\TargetingStorageInter
 
 class TimeOnSite implements ConditionInterface, DataProviderDependentInterface
 {
-    private int $seconds;
+    private readonly int $seconds;
 
     public function __construct(int $seconds)
     {

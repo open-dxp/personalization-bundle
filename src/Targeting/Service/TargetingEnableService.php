@@ -21,14 +21,8 @@ use OpenDxp\Http\RequestHelper;
 
 class TargetingEnableService
 {
-    private RequestHelper $requestHelper;
-
-    private bool $enabled;
-
-    public function __construct(RequestHelper $requestHelper, bool $enabled)
+    public function __construct(private readonly RequestHelper $requestHelper, private readonly bool $enabled)
     {
-        $this->enabled = $enabled;
-        $this->requestHelper = $requestHelper;
     }
 
     public function isTargetingEnabled(): bool

@@ -30,14 +30,10 @@ class DbStorage implements TargetingStorageInterface, MaintenanceStorageInterfac
 {
     use TimestampsTrait;
 
-    private Connection $db;
-
     private string $tableName = 'targeting_storage';
 
-    public function __construct(Connection $db, array $options = [])
+    public function __construct(private Connection $db, array $options = [])
     {
-        $this->db = $db;
-
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
 
@@ -86,7 +82,7 @@ class DbStorage implements TargetingStorageInterface, MaintenanceStorageInterfac
 
         if ($stmt instanceof Result) {
             while ($row = $stmt->fetchAssociative()) {
-                $data[$row['name']] = json_decode($row['value'], true);
+                $data[$row['name']] = json_decode((string) $row['value'], true);
             }
         }
 
@@ -188,7 +184,7 @@ EOF;
             return $default;
         }
 
-        $decoded = json_decode($result, true);
+        $decoded = json_decode((string) $result, true);
         if (!$decoded) {
             return $default;
         }

@@ -23,8 +23,6 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class OperatingSystem extends AbstractVariableCondition implements DataProviderDependentInterface
 {
-    private ?string $system = null;
-
     /**
      * Mapping from admin UI values to DeviceDetector results
      *
@@ -37,9 +35,8 @@ class OperatingSystem extends AbstractVariableCondition implements DataProviderD
         'IOS' => 'ios',
     ];
 
-    public function __construct(?string $system = null)
+    public function __construct(private readonly ?string $system = null)
     {
-        $this->system = $system;
     }
 
     public static function fromConfig(array $config): static

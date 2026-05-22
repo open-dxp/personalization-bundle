@@ -13,7 +13,7 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "require": {
-        "php": "~8.3.0 || ~8.4.0",
+        "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
         "open-dxp/opendxp": "^1.1",
         "geoip2/geoip2": "^2.9",
         "symfony/stopwatch": "^7.4",

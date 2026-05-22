@@ -35,24 +35,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FallbackStorage implements TargetingStorageInterface
 {
-    private TargetingStorageInterface $primaryStorage;
-
-    private TargetingStorageInterface $fallbackStorage;
-
-    private LoggerInterface $logger;
-
     private array $options = [];
 
     public function __construct(
-        TargetingStorageInterface $primaryStorage,
-        TargetingStorageInterface $fallbackStorage,
-        LoggerInterface $logger,
+        private readonly TargetingStorageInterface $primaryStorage,
+        private readonly TargetingStorageInterface $fallbackStorage,
+        private readonly LoggerInterface $logger,
         array $options = []
     ) {
-        $this->primaryStorage = $primaryStorage;
-        $this->fallbackStorage = $fallbackStorage;
-        $this->logger = $logger;
-
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
 

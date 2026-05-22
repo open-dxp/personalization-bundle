@@ -33,10 +33,6 @@ class TargetingCodeGenerator
 
     const BLOCK_AFTER_SCRIPT_TAG = 'afterScriptTag';
 
-    private EventDispatcherInterface $eventDispatcher;
-
-    private Environment $twig;
-
     private array $blocks = [
         self::BLOCK_BEFORE_SCRIPT_TAG,
         self::BLOCK_BEFORE_SCRIPT,
@@ -44,12 +40,8 @@ class TargetingCodeGenerator
         self::BLOCK_AFTER_SCRIPT_TAG,
     ];
 
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        Environment $templatingEngine
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->twig = $templatingEngine;
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly Environment $twig)
+    {
     }
 
     public function generateCode(VisitorInfo $visitorInfo): string

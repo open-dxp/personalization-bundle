@@ -37,20 +37,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class DocumentTargetGroupListener implements EventSubscriberInterface
 {
-    private DocumentResolver $documentResolver;
-
-    private ActionHandlerInterface|DelegatingActionHandler $actionHandler;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(
-        DocumentResolver $documentResolver,
-        ActionHandlerInterface $actionHandler,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->documentResolver = $documentResolver;
-        $this->actionHandler = $actionHandler;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private readonly DocumentResolver $documentResolver, private readonly ActionHandlerInterface|DelegatingActionHandler $actionHandler, private readonly EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     /**

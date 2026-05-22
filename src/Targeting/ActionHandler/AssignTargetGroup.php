@@ -27,7 +27,7 @@ class AssignTargetGroup implements ActionHandlerInterface
     const STORAGE_KEY = 'tg';
 
     public function __construct(
-        private TargetingStorageInterface $storage
+        private readonly TargetingStorageInterface $storage
     ) {
     }
 
@@ -122,7 +122,7 @@ class AssignTargetGroup implements ActionHandlerInterface
                 self::STORAGE_KEY,
                 $data
             );
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
 

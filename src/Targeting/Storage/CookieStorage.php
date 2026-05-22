@@ -43,10 +43,6 @@ class CookieStorage implements TargetingStorageInterface
 
     const string STORAGE_KEY_UPDATED_AT = '_u';
 
-    private CookieSaveHandlerInterface $saveHandler;
-
-    private EventDispatcherInterface $eventDispatcher;
-
     private array $data = [];
 
     private bool $changed = false;
@@ -56,12 +52,8 @@ class CookieStorage implements TargetingStorageInterface
         self::SCOPE_VISITOR => self::COOKIE_NAME_VISITOR,
     ];
 
-    public function __construct(
-        CookieSaveHandlerInterface $saveHandler,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->saveHandler = $saveHandler;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private CookieSaveHandlerInterface $saveHandler, private EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     public function all(VisitorInfo $visitorInfo, string $scope): array
@@ -75,9 +67,7 @@ class CookieStorage implements TargetingStorageInterface
         ];
 
         // filter internal values
-        $result = array_filter($this->data[$scope], static function ($key) use ($blocklist) {
-            return !in_array($key, $blocklist, true);
-        }, ARRAY_FILTER_USE_KEY);
+        $result = array_filter($this->data[$scope], static fn($key) => !in_array($key, $blocklist, true), ARRAY_FILTER_USE_KEY);
 
         return $result;
     }
@@ -93,11 +83,7 @@ class CookieStorage implements TargetingStorageInterface
     {
         $this->loadData($visitorInfo, $scope);
 
-        if (isset($this->data[$scope][$name])) {
-            return $this->data[$scope][$name];
-        }
-
-        return $default;
+        return $this->data[$scope][$name] ?? $default;
     }
 
     public function set(VisitorInfo $visitorInfo, string $scope, string $name, mixed $value): void

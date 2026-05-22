@@ -20,22 +20,16 @@ final class TargetGroupEvents
 {
     /**
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
-     *
-     * @var string
      */
-    const POST_ADD = 'opendxp.targetgroup.postAdd';
+    const string POST_ADD = 'opendxp.targetgroup.postAdd';
 
     /**
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
-     *
-     * @var string
      */
-    const POST_UPDATE = 'opendxp.targetgroup.postUpdate';
+    const string POST_UPDATE = 'opendxp.targetgroup.postUpdate';
 
     /**
      * @Event("OpenDxp\Bundle\PersonalizationBundle\Event\Model\TargetGroupEvent")
-     *
-     * @var string
      */
-    const POST_DELETE = 'opendxp.targetgroup.postDelete';
+    const string POST_DELETE = 'opendxp.targetgroup.postDelete';
 }

@@ -32,9 +32,9 @@ use Symfony\Contracts\Service\ResetInterface;
 class OpenDxpTargetingDataCollector extends DataCollector implements ResetInterface
 {
     public function __construct(
-        private VisitorInfoStorageInterface $visitorInfoStorage,
-        private DocumentResolver $documentResolver,
-        private TargetingDataCollector $targetingDataCollector
+        private readonly VisitorInfoStorageInterface $visitorInfoStorage,
+        private readonly DocumentResolver $documentResolver,
+        private readonly TargetingDataCollector $targetingDataCollector
     ) {
     }
 
@@ -67,6 +67,7 @@ class OpenDxpTargetingDataCollector extends DataCollector implements ResetInterf
         $this->data = $this->cloneVar($data);
     }
 
+    #[\Override]
     public function reset(): void
     {
         $this->data = [];

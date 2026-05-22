@@ -21,11 +21,8 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class TargetGroup extends AbstractVariableCondition implements ConditionInterface
 {
-    private ?int $targetGroupId = null;
-
-    public function __construct(?int $targetGroupId = null)
+    public function __construct(private readonly ?int $targetGroupId = null)
     {
-        $this->targetGroupId = $targetGroupId;
     }
 
     public static function fromConfig(array $config): self

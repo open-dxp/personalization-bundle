@@ -23,11 +23,8 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class Browser extends AbstractVariableCondition implements DataProviderDependentInterface
 {
-    private ?string $browser = null;
-
-    public function __construct(?string $browser = null)
+    public function __construct(private ?string $browser = null)
     {
-        $this->browser = $browser;
     }
 
     public static function fromConfig(array $config): static
@@ -65,7 +62,7 @@ class Browser extends AbstractVariableCondition implements DataProviderDependent
             $this->browser = 'Internet Explorer';
         }
 
-        if ('browser' === $type && strtolower($name ?? '') === strtolower($this->browser)) {
+        if ('browser' === $type && strtolower($name ?? '') === strtolower((string) $this->browser)) {
             $this->setMatchedVariables([
                 'type' => $type,
                 'name' => $name,

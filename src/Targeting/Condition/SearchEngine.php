@@ -68,13 +68,11 @@ class SearchEngine extends AbstractVariableCondition implements ConditionInterfa
         $pattern = null;
 
         if ('all' === $this->engine) {
-            $engines = array_map(function (string $engine) {
-                return preg_quote($engine, '/');
-            }, $this->validEngines);
+            $engines = array_map(fn(string $engine) => preg_quote($engine, '/'), $this->validEngines);
 
             $pattern = '/(' . implode('|', $engines) . ')/i';
         } else {
-            $pattern = '/(' . preg_quote($this->engine, '/') . ')/i';
+            $pattern = '/(' . preg_quote((string) $this->engine, '/') . ')/i';
         }
 
         if (preg_match($pattern, $referrer)) {

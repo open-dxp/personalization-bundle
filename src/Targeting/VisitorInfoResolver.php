@@ -41,19 +41,7 @@ class VisitorInfoResolver
 
     const STORAGE_KEY_MATCHED_SESSION_RULES = 'vi:sru'; // visitorInfo:sessionRules
 
-    const STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru'; // visitorInfo:visitorRules
-
-    private TargetingStorageInterface $targetingStorage;
-
-    private VisitorInfoStorageInterface $visitorInfoStorage;
-
-    private ConditionMatcherInterface $conditionMatcher;
-
-    private ActionHandlerInterface|DelegatingActionHandler $actionHandler;
-
-    private Connection $db;
-
-    private EventDispatcherInterface $eventDispatcher;
+    const STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru';
 
     /**
      * @var Rule[]|null
@@ -62,20 +50,8 @@ class VisitorInfoResolver
 
     private ?bool $targetingConfigured = null;
 
-    public function __construct(
-        TargetingStorageInterface $targetingStorage,
-        VisitorInfoStorageInterface $visitorInfoStorage,
-        ConditionMatcherInterface $conditionMatcher,
-        ActionHandlerInterface $actionHandler,
-        Connection $db,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->targetingStorage = $targetingStorage;
-        $this->visitorInfoStorage = $visitorInfoStorage;
-        $this->conditionMatcher = $conditionMatcher;
-        $this->actionHandler = $actionHandler;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->db = $db;
+    public function __construct(private TargetingStorageInterface $targetingStorage, private VisitorInfoStorageInterface $visitorInfoStorage, private ConditionMatcherInterface $conditionMatcher, private ActionHandlerInterface|DelegatingActionHandler $actionHandler, private Connection $db, private EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     public function resolve(Request $request): VisitorInfo
@@ -113,7 +89,7 @@ class VisitorInfoResolver
 
         try {
             $configuredRules = $this->db->fetchOne('SELECT id FROM targeting_target_groups UNION SELECT id FROM targeting_rules LIMIT 1');
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return false;
         }
 

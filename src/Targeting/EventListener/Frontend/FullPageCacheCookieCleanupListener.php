@@ -29,12 +29,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class FullPageCacheCookieCleanupListener implements EventSubscriberInterface
 {
-    private TargetingEnableService $targetingEnableService;
-
-    public function __construct(
-        TargetingEnableService $targetingEnableService
-    ) {
-        $this->targetingEnableService = $targetingEnableService;
+    public function __construct(private readonly TargetingEnableService $targetingEnableService)
+    {
     }
 
     /**

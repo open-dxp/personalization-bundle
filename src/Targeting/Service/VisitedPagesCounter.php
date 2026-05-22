@@ -27,13 +27,10 @@ class VisitedPagesCounter
 {
     const STORAGE_KEY = 'pgc';
 
-    private TargetingStorageInterface $targetingStorage;
-
     private bool $incremented = false;
 
-    public function __construct(TargetingStorageInterface $targetingStorage)
+    public function __construct(private readonly TargetingStorageInterface $targetingStorage)
     {
-        $this->targetingStorage = $targetingStorage;
     }
 
     public function getCount(VisitorInfo $visitorInfo, string $scope = TargetingStorageInterface::SCOPE_VISITOR): int

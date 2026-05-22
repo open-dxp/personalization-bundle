@@ -45,9 +45,7 @@ class SessionStorage implements TargetingStorageInterface
         ];
 
         // filter internal values
-        $result = array_filter($bag->all(), function ($key) use ($blocklist) {
-            return !in_array($key, $blocklist, true);
-        }, ARRAY_FILTER_USE_KEY);
+        $result = array_filter($bag->all(), fn($key) => !in_array($key, $blocklist, true), ARRAY_FILTER_USE_KEY);
 
         return $result;
     }
@@ -169,23 +167,14 @@ class SessionStorage implements TargetingStorageInterface
 
         $session = $request->getSession();
 
-        switch ($scope) {
-            case self::SCOPE_SESSION:
-                $bag = $session->getBag(TargetingSessionBagListener::TARGETING_BAG_SESSION);
-
-                break;
-
-            case self::SCOPE_VISITOR:
-                $bag = $session->getBag(TargetingSessionBagListener::TARGETING_BAG_VISITOR);
-
-                break;
-
-            default:
-                throw new \InvalidArgumentException(sprintf(
-                    'The session storage is not able to handle the "%s" scope',
-                    $scope
-                ));
-        }
+        $bag = match ($scope) {
+            self::SCOPE_SESSION => $session->getBag(TargetingSessionBagListener::TARGETING_BAG_SESSION),
+            self::SCOPE_VISITOR => $session->getBag(TargetingSessionBagListener::TARGETING_BAG_VISITOR),
+            default => throw new \InvalidArgumentException(sprintf(
+                'The session storage is not able to handle the "%s" scope',
+                $scope
+            )),
+        };
 
         if ($bag instanceof AttributeBag) {
             return $bag;

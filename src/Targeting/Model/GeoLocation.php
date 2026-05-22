@@ -19,13 +19,11 @@ namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Model;
 
 class GeoLocation
 {
-    private float $latitude;
+    private readonly float $latitude;
 
-    private float $longitude;
+    private readonly float $longitude;
 
-    private ?float $altitude = null;
-
-    public function __construct(float $latitude, float $longitude, ?float $altitude = null)
+    public function __construct(float $latitude, float $longitude, private readonly ?float $altitude = null)
     {
         if (!($latitude >= -90 && $latitude <= 90)) {
             throw new \InvalidArgumentException('Latitude is invalid');
@@ -37,7 +35,6 @@ class GeoLocation
 
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->altitude = $altitude;
     }
 
     public static function build(float $latitude, float $longitude, ?float $altitude = null): self

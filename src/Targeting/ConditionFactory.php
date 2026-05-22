@@ -24,24 +24,19 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ConditionFactory implements ConditionFactoryInterface
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    /**
-     * @var string[]
-     */
-    private array $conditions = [];
-
     /**
      * @var string[]
      */
     private array $blocklistedKeys = ['type', 'operator', 'bracketLeft', 'bracketRight'];
 
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        array $conditions
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->conditions = $conditions;
+        private readonly EventDispatcherInterface $eventDispatcher,
+        /**
+         * @var string[]
+         */
+        private array $conditions
+    )
+    {
     }
 
     public function build(array $config): ConditionInterface
@@ -60,9 +55,7 @@ class ConditionFactory implements ConditionFactoryInterface
             ));
         }
 
-        $typeConfig = array_filter($config, function ($v, $k) {
-            return !in_array($k, $this->blocklistedKeys);
-        }, ARRAY_FILTER_USE_BOTH);
+        $typeConfig = array_filter($config, fn($v, $k) => !in_array($k, $this->blocklistedKeys), ARRAY_FILTER_USE_BOTH);
 
         $event = new BuildConditionEvent($type, $this->conditions[$type], $typeConfig);
         $this->eventDispatcher->dispatch($event, TargetingEvents::BUILD_CONDITION);

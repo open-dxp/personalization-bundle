@@ -21,11 +21,8 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class Url extends AbstractVariableCondition implements ConditionInterface
 {
-    private ?string $pattern = null;
-
-    public function __construct(?string $pattern = null)
+    public function __construct(private readonly ?string $pattern = null)
     {
-        $this->pattern = $pattern;
     }
 
     public static function fromConfig(array $config): static

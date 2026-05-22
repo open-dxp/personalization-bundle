@@ -66,7 +66,7 @@ class Redirect implements ActionHandlerInterface
     private function addUrlParam(string $url, string $param, int $value): string
     {
         // add _ptr parameter
-        if (false !== strpos($url, '?')) {
+        if (str_contains($url, '?')) {
             $url .= '&';
         } else {
             $url .= '?';

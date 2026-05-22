@@ -80,9 +80,7 @@ class Page extends \OpenDxp\Model\Document\Page implements TargetingDocumentInte
             }
         }, $targetGroups);
 
-        $ids = array_filter($ids, function ($id) {
-            return null !== $id && $id > 0;
-        });
+        $ids = array_filter($ids, fn($id) => null !== $id && $id > 0);
 
         $this->setTargetGroupIds($ids);
     }

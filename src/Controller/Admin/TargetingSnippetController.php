@@ -61,11 +61,13 @@ class TargetingSnippetController extends SnippetController
      * @throws \Exception
      */
     #[Route('/save', name: 'opendxp_admin_document_snippet_save', methods: ['PUT', 'POST'])]
+    #[\Override]
     public function saveAction(Request $request): JsonResponse
     {
         return parent::saveAction($request);
     }
 
+    #[\Override]
     protected function addDataToDocument(Request $request, Document $document): void
     {
         if ($document instanceof Document\PageSnippet) {

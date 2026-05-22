@@ -31,9 +31,9 @@ class JWTCookieSaveHandler extends AbstractCookieSaveHandler
 {
     const CLAIM_TARGETING_DATA = 'ptg';
 
-    private Configuration $config;
+    private readonly Configuration $config;
 
-    private LoggerInterface|NullLogger $logger;
+    private readonly LoggerInterface|NullLogger $logger;
 
     /**
      * @param non-empty-string $secret

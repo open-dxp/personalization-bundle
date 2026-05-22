@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -25,13 +25,19 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Throwable;
 
 class ConditionMatcher implements ConditionMatcherInterface
 {
     private array $collectedVariables = [];
 
-    public function __construct(private readonly ConditionFactoryInterface $conditionFactory, private readonly DataLoaderInterface $dataLoader, private readonly EventDispatcherInterface $eventDispatcher, private readonly ExpressionLanguage $expressionLanguage, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly ConditionFactoryInterface $conditionFactory,
+        private readonly DataLoaderInterface $dataLoader,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ExpressionLanguage $expressionLanguage,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     public function match(VisitorInfo $visitorInfo, array $conditions, bool $collectVariables = false): bool
@@ -72,7 +78,7 @@ class ConditionMatcher implements ConditionMatcherInterface
     {
         try {
             $condition = $this->conditionFactory->build($config);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error((string) $e);
 
             return false;
@@ -95,7 +101,7 @@ class ConditionMatcher implements ConditionMatcherInterface
 
         try {
             $result = $condition->match($visitorInfo);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error((string) $e);
 
             return false;

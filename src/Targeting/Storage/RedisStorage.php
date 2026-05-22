@@ -11,13 +11,16 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use Credis_Client;
+use DateTimeImmutable;
 use DateTimeInterface;
+use LogicException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
 
@@ -29,9 +32,9 @@ class RedisStorage implements TargetingStorageInterface
 
     const string STORAGE_KEY_UPDATED_AT = '_u';
 
-    private \Credis_Client $redis;
+    private Credis_Client $redis;
 
-    public function __construct(\Credis_Client $redis)
+    public function __construct(Credis_Client $redis)
     {
         $this->redis = $redis;
     }
@@ -144,7 +147,7 @@ class RedisStorage implements TargetingStorageInterface
         // only allow migration if a visitor ID is available as otherwise the fallback
         // would clear the original storage although data was not stored
         if (!$visitorInfo->hasVisitorId()) {
-            throw new \LogicException('Can\'t migrate to Redis storage as no visitor ID is set');
+            throw new LogicException('Can\'t migrate to Redis storage as no visitor ID is set');
         }
 
         $values = $storage->all($visitorInfo, $scope);
@@ -185,17 +188,17 @@ class RedisStorage implements TargetingStorageInterface
         $multi->exec();
     }
 
-    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         return $this->loadDate($visitorInfo, $scope, self::STORAGE_KEY_CREATED_AT);
     }
 
-    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         return $this->loadDate($visitorInfo, $scope, self::STORAGE_KEY_UPDATED_AT);
     }
 
-    private function loadDate(VisitorInfo $visitorInfo, string $scope, string $storageKey): ?\DateTimeImmutable
+    private function loadDate(VisitorInfo $visitorInfo, string $scope, string $storageKey): ?DateTimeImmutable
     {
         if (!$visitorInfo->hasVisitorId()) {
             return null;
@@ -208,7 +211,7 @@ class RedisStorage implements TargetingStorageInterface
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat('U', $timestamp) ?: null;
+        return DateTimeImmutable::createFromFormat('U', $timestamp) ?: null;
     }
 
     private function buildKey(VisitorInfo $visitorInfo, string $scope): string
@@ -222,7 +225,7 @@ class RedisStorage implements TargetingStorageInterface
     }
 
     private function updateTimestamps(
-        \Credis_Client $multi,
+        Credis_Client $multi,
         string $key,
         int $currentCreatedAt,
         ?DateTimeInterface $createdAt = null,
@@ -237,7 +240,7 @@ class RedisStorage implements TargetingStorageInterface
         $multi->hSet($key, self::STORAGE_KEY_UPDATED_AT, (string)($timestamps['updatedAt']->getTimestamp()));
     }
 
-    private function updateExpiry(\Credis_Client $multi, string $scope, string $key): void
+    private function updateExpiry(Credis_Client $multi, string $scope, string $key): void
     {
         $expiry = $this->expiryFor($scope);
         if ($expiry > 0) {

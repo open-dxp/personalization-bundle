@@ -11,12 +11,13 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition;
 
+use InvalidArgumentException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class SearchEngine extends AbstractVariableCondition implements ConditionInterface
@@ -34,7 +35,7 @@ class SearchEngine extends AbstractVariableCondition implements ConditionInterfa
             $validEngines = array_merge(['all'], $this->validEngines);
 
             if (!in_array($engine, $validEngines, true)) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new InvalidArgumentException(sprintf(
                     'Invalid engine: "%s"',
                     $engine
                 ));
@@ -68,7 +69,7 @@ class SearchEngine extends AbstractVariableCondition implements ConditionInterfa
         $pattern = null;
 
         if ('all' === $this->engine) {
-            $engines = array_map(fn(string $engine) => preg_quote($engine, '/'), $this->validEngines);
+            $engines = array_map(fn (string $engine) => preg_quote($engine, '/'), $this->validEngines);
 
             $pattern = '/(' . implode('|', $engines) . ')/i';
         } else {

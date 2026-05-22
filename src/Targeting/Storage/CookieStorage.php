@@ -11,13 +11,16 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
+use InvalidArgumentException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Cookie\CookieSaveHandlerInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
@@ -67,7 +70,7 @@ class CookieStorage implements TargetingStorageInterface
         ];
 
         // filter internal values
-        $result = array_filter($this->data[$scope], static fn($key) => !in_array($key, $blocklist, true), ARRAY_FILTER_USE_KEY);
+        $result = array_filter($this->data[$scope], static fn ($key) => !in_array($key, $blocklist, true), ARRAY_FILTER_USE_KEY);
 
         return $result;
     }
@@ -130,7 +133,7 @@ class CookieStorage implements TargetingStorageInterface
         $this->addSaveListener($visitorInfo);
     }
 
-    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         $this->loadData($visitorInfo, $scope);
 
@@ -138,10 +141,10 @@ class CookieStorage implements TargetingStorageInterface
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat('U', (string)$this->data[$scope][self::STORAGE_KEY_CREATED_AT]);
+        return DateTimeImmutable::createFromFormat('U', (string)$this->data[$scope][self::STORAGE_KEY_CREATED_AT]);
     }
 
-    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         $this->loadData($visitorInfo, $scope);
 
@@ -149,13 +152,13 @@ class CookieStorage implements TargetingStorageInterface
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat('U', (string)$this->data[$scope][self::STORAGE_KEY_CREATED_AT]);
+        return DateTimeImmutable::createFromFormat('U', (string)$this->data[$scope][self::STORAGE_KEY_CREATED_AT]);
     }
 
     private function loadData(VisitorInfo $visitorInfo, string $scope): array
     {
         if (!isset($this->scopeCookieMapping[$scope])) {
-            throw new \InvalidArgumentException(sprintf('Scope "%s" is not supported', $scope));
+            throw new InvalidArgumentException(sprintf('Scope "%s" is not supported', $scope));
         }
 
         if (isset($this->data[$scope])) {
@@ -213,13 +216,13 @@ class CookieStorage implements TargetingStorageInterface
         $this->data[$scope][self::STORAGE_KEY_UPDATED_AT] = $timestamps['updatedAt']->getTimestamp();
     }
 
-    protected function expiryFor(string $scope): \DateTime|int
+    protected function expiryFor(string $scope): DateTime|int
     {
         $expiry = 0;
         if (self::SCOPE_VISITOR === $scope) {
-            $expiry = new \DateTime('+1 year');
+            $expiry = new DateTime('+1 year');
         } elseif (self::SCOPE_SESSION === $scope) {
-            $expiry = new \DateTime('+30 minutes');
+            $expiry = new DateTime('+30 minutes');
         }
 
         return $expiry;

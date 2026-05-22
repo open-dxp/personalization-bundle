@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -24,8 +24,6 @@ interface ConditionFactoryInterface
     /**
      * Builds a condition instance from a config array as configured
      * in the admin UI and stored to DB.
-     *
-     *
      */
     public function build(array $config): ConditionInterface;
 }

@@ -11,12 +11,15 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Cookie;
 
+use DateTimeImmutable;
+use DateTimeInterface;
+use Exception;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer;
@@ -26,6 +29,7 @@ use Lcobucci\JWT\Token\Plain;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Throwable;
 
 class JWTCookieSaveHandler extends AbstractCookieSaveHandler
 {
@@ -70,7 +74,7 @@ class JWTCookieSaveHandler extends AbstractCookieSaveHandler
             if (!$validator->validate($token, ...$this->config->validationConstraints())) {
                 return [];
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error((string) $e);
 
             return [];
@@ -85,7 +89,7 @@ class JWTCookieSaveHandler extends AbstractCookieSaveHandler
         return $data;
     }
 
-    protected function prepareData(string $scope, string $name, \DateTimeInterface|int|string $expire, ?array $data): bool|string|null
+    protected function prepareData(string $scope, string $name, DateTimeInterface|int|string $expire, ?array $data): bool|string|null
     {
         if (empty($data)) {
             return null;
@@ -99,13 +103,11 @@ class JWTCookieSaveHandler extends AbstractCookieSaveHandler
     }
 
     /**
-     *
-     *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function createTokenBuilder(string $scope, string $name, \DateTimeInterface|int|string $expire, ?array $data): Builder
+    protected function createTokenBuilder(string $scope, string $name, DateTimeInterface|int|string $expire, ?array $data): Builder
     {
-        $time = new \DateTimeImmutable();
+        $time = new DateTimeImmutable();
 
         $builder = $this->config->builder()
             ->issuedAt($time)
@@ -114,10 +116,10 @@ class JWTCookieSaveHandler extends AbstractCookieSaveHandler
         if (0 === $expire) {
             $builder = $builder->expiresAt($time->modify('+30 minutes')); // expire in 30 min
         } elseif (is_int($expire) && $expire > 0) {
-            $expire = new \DateTimeImmutable('@'. $expire);
+            $expire = new DateTimeImmutable('@'. $expire);
             $builder = $builder->expiresAt($expire);
-        } elseif ($expire instanceof \DateTimeInterface) {
-            $expire = new \DateTimeImmutable('@'. $expire->getTimestamp());
+        } elseif ($expire instanceof DateTimeInterface) {
+            $expire = new DateTimeImmutable('@'. $expire->getTimestamp());
             $builder = $builder->expiresAt($expire);
         }
 

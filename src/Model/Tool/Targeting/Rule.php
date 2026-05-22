@@ -10,12 +10,13 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting;
 
+use Exception;
 use OpenDxp\Model;
 
 /**
@@ -76,8 +77,6 @@ class Rule extends Model\AbstractModel
 
     /**
      * Static helper to retrieve an instance of Tool\Targeting\Rule by the given ID
-     *
-     *
      */
     public static function getById(int $id): ?Rule
     {
@@ -92,9 +91,7 @@ class Rule extends Model\AbstractModel
     }
 
     /**
-     *
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getByName(string $name): ?Rule
     {

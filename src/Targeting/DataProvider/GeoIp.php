@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -24,6 +24,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Cache\Core\CoreCacheHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 /**
  * Loads geolocation from GeoIP (IP to geo database).
@@ -124,7 +125,7 @@ class GeoIp implements DataProviderInterface
     {
         try {
             $city = $this->geoIpProvider->city($ip);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error((string) $e);
 
             return null;
@@ -138,7 +139,7 @@ class GeoIp implements DataProviderInterface
         $data = $city->jsonSerialize();
 
         // remove localized names as we don't need them
-        $filter = (fn($key) => 'names' !== $key);
+        $filter = (fn ($key) => 'names' !== $key);
 
         foreach (array_keys($data) as $section) {
             $data[$section] = array_filter($data[$section], $filter, ARRAY_FILTER_USE_KEY);

@@ -9,12 +9,13 @@
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\TargetGroup\Listing;
 
+use Exception;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\TargetGroup;
 use OpenDxp\Model;
 
@@ -46,7 +47,7 @@ class Dao extends Model\Listing\Dao\AbstractDao
     {
         try {
             return (int) $this->db->fetchOne('SELECT COUNT(*) FROM targeting_target_groups ' . $this->getCondition(), $this->model->getConditionVariables());
-        } catch (\Exception) {
+        } catch (Exception) {
             return 0;
         }
     }

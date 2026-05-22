@@ -11,12 +11,13 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition;
 
+use InvalidArgumentException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProvider\TargetingStorage;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProviderDependentInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
@@ -29,7 +30,7 @@ class TimeOnSite implements ConditionInterface, DataProviderDependentInterface
     public function __construct(int $seconds)
     {
         if ($seconds < 0) {
-            throw new \InvalidArgumentException('Seconds needs to be a positive integer');
+            throw new InvalidArgumentException('Seconds needs to be a positive integer');
         }
 
         $this->seconds = $seconds;

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -31,14 +31,11 @@ interface ConditionInterface
      * does not define a value (= all countries), it does not need to query the
      * data provider for the country name as it would match everything. Returning
      * false here will set the match result implicitly to false.
-     *
      */
     public function canMatch(): bool;
 
     /**
      * Tests condition against visitor info
-     *
-     *
      */
     public function match(VisitorInfo $visitorInfo): bool;
 }

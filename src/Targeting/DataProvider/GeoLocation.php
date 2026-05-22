@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -22,6 +22,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\GeoLocation as GeoLocat
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 /**
  * Loads geolocation (only coordinates and optional altitude) from either
@@ -55,7 +56,7 @@ class GeoLocation implements DataProviderInterface
             return $location;
         }
 
-        $overrides = array_filter($overrides, fn($key) => in_array($key, ['latitude', 'longitude', 'altitude']), ARRAY_FILTER_USE_KEY);
+        $overrides = array_filter($overrides, fn ($key) => in_array($key, ['latitude', 'longitude', 'altitude']), ARRAY_FILTER_USE_KEY);
 
         $data = array_merge([
             'latitude' => $location ? $location->getLatitude() : null,
@@ -125,7 +126,7 @@ class GeoLocation implements DataProviderInterface
         if (null !== $latitude && null !== $longitude) {
             try {
                 return new GeoLocationModel($latitude, $longitude, $altitude);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $this->logger->error((string) $e);
             }
         }

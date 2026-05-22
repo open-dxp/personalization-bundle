@@ -9,12 +9,13 @@
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
 
+use Exception;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
 use OpenDxp\Model;
 use OpenDxp\Tool\Serialize;
@@ -27,7 +28,6 @@ use OpenDxp\Tool\Serialize;
 class Dao extends Model\Dao\AbstractDao
 {
     /**
-     *
      * @throws Model\Exception\NotFoundException
      */
     public function getById(?int $id = null): void
@@ -49,8 +49,7 @@ class Dao extends Model\Dao\AbstractDao
     }
 
     /**
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getByName(?string $name = null): void
     {
@@ -91,7 +90,7 @@ class Dao extends Model\Dao\AbstractDao
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(): void
     {

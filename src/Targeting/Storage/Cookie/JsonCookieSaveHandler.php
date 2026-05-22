@@ -11,11 +11,13 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Cookie;
+
+use DateTimeInterface;
 
 /**
  * NOTE: using this save handler is inherently insecure and can open vulnerabilities by injecting malicious data into the
@@ -37,7 +39,7 @@ class JsonCookieSaveHandler extends AbstractCookieSaveHandler
         return [];
     }
 
-    protected function prepareData(string $scope, string $name, \DateTimeInterface|int|string $expire, ?array $data): bool|string|null
+    protected function prepareData(string $scope, string $name, DateTimeInterface|int|string $expire, ?array $data): bool|string|null
     {
         if (empty($data)) {
             return null;

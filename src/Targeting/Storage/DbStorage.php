@@ -11,17 +11,20 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Types\Types;
+use Exception;
+use LogicException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -224,7 +227,7 @@ EOF;
         // only allow migration if a visitor ID is available as otherwise the fallback
         // would clear the original storage although data was not stored
         if (!$visitorInfo->hasVisitorId()) {
-            throw new \LogicException('Can\'t migrate to DB storage as no visitor ID is set');
+            throw new LogicException('Can\'t migrate to DB storage as no visitor ID is set');
         }
 
         $values = $storage->all($visitorInfo, $scope);
@@ -246,19 +249,19 @@ EOF;
             $this->cleanup($scope);
 
             $this->db->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->db->rollBack();
 
             throw $e;
         }
     }
 
-    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         return $this->loadDate($visitorInfo, $scope, 'MIN(creationDate)');
     }
 
-    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         return $this->loadDate($visitorInfo, $scope, 'MAX(modificationDate)');
     }
@@ -278,7 +281,7 @@ EOF;
         }
     }
 
-    private function loadDate(VisitorInfo $visitorInfo, string $scope, string $select): ?\DateTimeImmutable
+    private function loadDate(VisitorInfo $visitorInfo, string $scope, string $select): ?DateTimeImmutable
     {
         if (!$visitorInfo->hasVisitorId()) {
             return null;
@@ -307,7 +310,7 @@ EOF;
         return null;
     }
 
-    private function convertToDateTime(mixed $result = null): ?\DateTimeImmutable
+    private function convertToDateTime(mixed $result = null): ?DateTimeImmutable
     {
         if (!$result) {
             return null;
@@ -315,7 +318,7 @@ EOF;
 
         $dateTime = $this->db->convertToPHPValue($result, Types::DATETIME_MUTABLE);
 
-        return \DateTimeImmutable::createFromMutable($dateTime);
+        return DateTimeImmutable::createFromMutable($dateTime);
     }
 
     private function updateTimestamps(

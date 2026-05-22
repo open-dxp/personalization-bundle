@@ -11,11 +11,13 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Model;
+
+use InvalidArgumentException;
 
 class GeoLocation
 {
@@ -23,14 +25,17 @@ class GeoLocation
 
     private readonly float $longitude;
 
-    public function __construct(float $latitude, float $longitude, private readonly ?float $altitude = null)
-    {
+    public function __construct(
+        float $latitude,
+        float $longitude,
+        private readonly ?float $altitude = null
+    ) {
         if (!($latitude >= -90 && $latitude <= 90)) {
-            throw new \InvalidArgumentException('Latitude is invalid');
+            throw new InvalidArgumentException('Latitude is invalid');
         }
 
         if (!($longitude >= -180 && $longitude <= 180)) {
-            throw new \InvalidArgumentException('Longitude is invalid');
+            throw new InvalidArgumentException('Longitude is invalid');
         }
 
         $this->latitude = $latitude;

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -20,11 +20,13 @@ namespace OpenDxp\Bundle\PersonalizationBundle\DataCollector;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Debug\TargetingDataCollector;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\VisitorInfoStorageInterface;
 use OpenDxp\Http\Request\Resolver\DocumentResolver;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\VarDumper\Cloner\Data;
 use Symfony\Contracts\Service\ResetInterface;
+use Throwable;
 
 /**
  * @internal
@@ -43,7 +45,7 @@ class OpenDxpTargetingDataCollector extends DataCollector implements ResetInterf
         return 'opendxp_targeting';
     }
 
-    public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
+    public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data = [];
 
@@ -67,7 +69,7 @@ class OpenDxpTargetingDataCollector extends DataCollector implements ResetInterf
         $this->data = $this->cloneVar($data);
     }
 
-    #[\Override]
+    #[Override]
     public function reset(): void
     {
         $this->data = [];

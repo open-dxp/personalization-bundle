@@ -11,13 +11,17 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeImmutable;
 use DateTimeInterface;
+use Exception;
+use InvalidArgumentException;
+use LogicException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\EventListener\TargetingSessionBagListener;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\Traits\TimestampsTrait;
@@ -45,7 +49,7 @@ class SessionStorage implements TargetingStorageInterface
         ];
 
         // filter internal values
-        $result = array_filter($bag->all(), fn($key) => !in_array($key, $blocklist, true), ARRAY_FILTER_USE_KEY);
+        $result = array_filter($bag->all(), fn ($key) => !in_array($key, $blocklist, true), ARRAY_FILTER_USE_KEY);
 
         return $result;
     }
@@ -111,7 +115,7 @@ class SessionStorage implements TargetingStorageInterface
         // would clear the original storage although data was not stored
         $bag = $this->getSessionBag($visitorInfo, $scope);
         if (null === $bag) {
-            throw new \LogicException('Can\'t migrate to Session storage as session bag could not be loaded');
+            throw new LogicException('Can\'t migrate to Session storage as session bag could not be loaded');
         }
 
         $values = $storage->all($visitorInfo, $scope);
@@ -127,17 +131,17 @@ class SessionStorage implements TargetingStorageInterface
         );
     }
 
-    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         $bag = $this->getSessionBag($visitorInfo, $scope);
         if (null === $bag || !$bag->has(self::STORAGE_KEY_CREATED_AT)) {
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat('U', (string)$bag->get(self::STORAGE_KEY_CREATED_AT));
+        return DateTimeImmutable::createFromFormat('U', (string)$bag->get(self::STORAGE_KEY_CREATED_AT));
     }
 
-    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         $bag = $this->getSessionBag($visitorInfo, $scope);
 
@@ -145,13 +149,13 @@ class SessionStorage implements TargetingStorageInterface
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat('U', (string)$bag->get(self::STORAGE_KEY_UPDATED_AT));
+        return DateTimeImmutable::createFromFormat('U', (string)$bag->get(self::STORAGE_KEY_UPDATED_AT));
     }
 
     /**
      * Loads a session bag
      *
-     * @throws \Exception
+     * @throws Exception
      */
     private function getSessionBag(VisitorInfo $visitorInfo, string $scope, bool $checkPreviousSession = false): ?AttributeBag
     {
@@ -170,7 +174,7 @@ class SessionStorage implements TargetingStorageInterface
         $bag = match ($scope) {
             self::SCOPE_SESSION => $session->getBag(TargetingSessionBagListener::TARGETING_BAG_SESSION),
             self::SCOPE_VISITOR => $session->getBag(TargetingSessionBagListener::TARGETING_BAG_VISITOR),
-            default => throw new \InvalidArgumentException(sprintf(
+            default => throw new InvalidArgumentException(sprintf(
                 'The session storage is not able to handle the "%s" scope',
                 $scope
             )),
@@ -180,7 +184,7 @@ class SessionStorage implements TargetingStorageInterface
             return $bag;
         }
 
-        throw new \Exception('wrong type');
+        throw new Exception('wrong type');
     }
 
     private function updateTimestamps(

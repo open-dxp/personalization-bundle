@@ -11,15 +11,17 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting;
 
+use InvalidArgumentException;
 use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\BuildConditionEvent;
 use OpenDxp\Bundle\PersonalizationBundle\Event\TargetingEvents;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Condition\ConditionInterface;
+use RuntimeException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ConditionFactory implements ConditionFactoryInterface
@@ -35,8 +37,7 @@ class ConditionFactory implements ConditionFactoryInterface
          * @var string[]
          */
         private array $conditions
-    )
-    {
+    ) {
     }
 
     public function build(array $config): ConditionInterface
@@ -45,17 +46,17 @@ class ConditionFactory implements ConditionFactoryInterface
         $type = $config['type'] ?? null;
 
         if (empty($type)) {
-            throw new \InvalidArgumentException('Invalid condition: Type is not set');
+            throw new InvalidArgumentException('Invalid condition: Type is not set');
         }
 
         if (!isset($this->conditions[$type])) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Invalid condition: Condition with type "%s" is not registered',
                 $type
             ));
         }
 
-        $typeConfig = array_filter($config, fn($v, $k) => !in_array($k, $this->blocklistedKeys), ARRAY_FILTER_USE_BOTH);
+        $typeConfig = array_filter($config, fn ($v, $k) => !in_array($k, $this->blocklistedKeys), ARRAY_FILTER_USE_BOTH);
 
         $event = new BuildConditionEvent($type, $this->conditions[$type], $typeConfig);
         $this->eventDispatcher->dispatch($event, TargetingEvents::BUILD_CONDITION);
@@ -72,7 +73,7 @@ class ConditionFactory implements ConditionFactoryInterface
         $class = $this->conditions[$type];
 
         if (!class_exists($class)) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'Configured condition class "%s" for type "%s" does not exist',
                 $class,
                 $type
@@ -80,7 +81,7 @@ class ConditionFactory implements ConditionFactoryInterface
         }
 
         if (!is_subclass_of($class, ConditionInterface::class)) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'Configured condition class "%s" for type "%s" has not the ConditionInterface',
                 $class,
                 $type

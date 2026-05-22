@@ -11,18 +11,21 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Model;
 
+use ArrayIterator;
+use InvalidArgumentException;
+use IteratorAggregate;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\TargetGroup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class VisitorInfo implements \IteratorAggregate
+class VisitorInfo implements IteratorAggregate
 {
     const VISITOR_ID_COOKIE_NAME = '_pc_vis';
 
@@ -64,14 +67,16 @@ class VisitorInfo implements \IteratorAggregate
 
     /**
      * List of frontend data providers which are expected to provide data
-     *
      */
     private array $frontendDataProviders = [];
 
     private ?Response $response = null;
 
-    public function __construct(private readonly Request $request, private readonly ?string $visitorId = null, private readonly ?string $sessionId = null)
-    {
+    public function __construct(
+        private readonly Request $request,
+        private readonly ?string $visitorId = null,
+        private readonly ?string $sessionId = null
+    ) {
     }
 
     public static function fromRequest(Request $request): static
@@ -161,6 +166,7 @@ class VisitorInfo implements \IteratorAggregate
         usort($assignments, function (TargetGroupAssignment $a, TargetGroupAssignment $b) {
             $aCount = $a->getCount();
             $bCount = $b->getCount();
+
             return $bCount <=> $aCount;
         });
 
@@ -182,7 +188,7 @@ class VisitorInfo implements \IteratorAggregate
     public function assignTargetGroup(TargetGroup $targetGroup, int $count = 1, bool $overwrite = false): void
     {
         if ($count < 1) {
-            throw new \InvalidArgumentException('Count must be greater than 0');
+            throw new InvalidArgumentException('Count must be greater than 0');
         }
 
         if (isset($this->targetGroupAssignments[$targetGroup->getId()])) {
@@ -217,7 +223,7 @@ class VisitorInfo implements \IteratorAggregate
     public function getAssignedTargetGroups(): array
     {
         if (null === $this->targetGroups) {
-            $this->targetGroups = array_map(fn(TargetGroupAssignment $assignment) => $assignment->getTargetGroup(), $this->getTargetGroupAssignments());
+            $this->targetGroups = array_map(fn (TargetGroupAssignment $assignment) => $assignment->getTargetGroup(), $this->getTargetGroupAssignments());
         }
 
         return $this->targetGroups;
@@ -268,9 +274,9 @@ class VisitorInfo implements \IteratorAggregate
         $this->data = $data;
     }
 
-    public function getIterator(): \ArrayIterator
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->data);
+        return new ArrayIterator($this->data);
     }
 
     public function has(int|string $key): bool

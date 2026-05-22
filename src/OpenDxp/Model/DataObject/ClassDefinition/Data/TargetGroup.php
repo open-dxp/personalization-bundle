@@ -11,23 +11,26 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Model\DataObject\ClassDefinition\Data;
 
+use Exception;
+use OpenDxp;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool;
 use OpenDxp\Model;
 use OpenDxp\Model\DataObject;
 use OpenDxp\Model\DataObject\ClassDefinition\Service;
+use Override;
 
 class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
 {
     /**
      * @see ResourcePersistenceAwareInterface::getDataFromResource
      */
-    #[\Override]
+    #[Override]
     public function getDataFromResource(
         mixed $data,
         ?DataObject\Concrete $object = null,
@@ -36,7 +39,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         if (!empty($data)) {
             try {
                 $this->checkValidity($data, true, $params);
-            } catch (\Exception) {
+            } catch (Exception) {
                 $data = null;
             }
         }
@@ -47,7 +50,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
     /**
      * @see ResourcePersistenceAwareInterface::getDataForResource
      */
-    #[\Override]
+    #[Override]
     public function getDataForResource(
         mixed $data,
         ?DataObject\Concrete $object = null,
@@ -57,7 +60,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         if (!empty($data)) {
             try {
                 $this->checkValidity($data, true, $params);
-            } catch (\Exception) {
+            } catch (Exception) {
                 $data = null;
             }
         }
@@ -87,7 +90,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         $this->setOptions($options);
     }
 
-    #[\Override]
+    #[Override]
     public function checkValidity(mixed $data, bool $omitMandatoryCheck = false, array $params = []): void
     {
         if (!$omitMandatoryCheck && $this->getMandatory() && empty($data)) {
@@ -103,18 +106,18 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         }
     }
 
-    #[\Override]
+    #[Override]
     public static function __set_state(array $data): static
     {
         $obj = parent::__set_state($data);
-        if (\OpenDxp::inAdmin()) {
+        if (OpenDxp::inAdmin()) {
             $obj->configureOptions();
         }
 
         return $obj;
     }
 
-    #[\Override]
+    #[Override]
     public function jsonSerialize(): mixed
     {
         if (Service::doRemoveDynamicOptions()) {
@@ -124,7 +127,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         return parent::jsonSerialize();
     }
 
-    #[\Override]
+    #[Override]
     public function resolveBlockedVars(): array
     {
         $blockedVars = parent::resolveBlockedVars();
@@ -133,7 +136,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
         return $blockedVars;
     }
 
-    #[\Override]
+    #[Override]
     public function getFieldType(): string
     {
         return 'targetGroup';
@@ -146,6 +149,7 @@ class TargetGroup extends Model\DataObject\ClassDefinition\Data\Select
 
     /**
      * @return $this
+     *
      * @internal
      */
     private function init(): static

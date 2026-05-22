@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -32,14 +32,17 @@ class DocumentTargetingConfigurator
 
     private ?TargetGroup $overrideTargetGroup = null;
 
-    public function __construct(private readonly VisitorInfoStorageInterface $visitorInfoStorage, private readonly RequestHelper $requestHelper, private readonly UserLoader $userLoader, private readonly CoreCacheHandler $cache)
-    {
+    public function __construct(
+        private readonly VisitorInfoStorageInterface $visitorInfoStorage,
+        private readonly RequestHelper $requestHelper,
+        private readonly UserLoader $userLoader,
+        private readonly CoreCacheHandler $cache
+    ) {
     }
 
     /**
      * Configure target group to use on the document by reading the most relevant
      * target group from the visitor info.
-     *
      */
     public function configureTargetGroup(Document $document): void
     {
@@ -71,8 +74,6 @@ class DocumentTargetingConfigurator
 
     /**
      * Handle _ptg admin param here only if there's a valid user session
-     *
-     *
      */
     private function isConfiguredByAdminParam(TargetingDocumentInterface $document): bool
     {
@@ -163,8 +164,6 @@ class DocumentTargetingConfigurator
     /**
      * Resolves valid target groups for a document. A target group is seen as valid
      * if it has at least one element configured for that target group.
-     *
-     *
      */
     public function getTargetGroupsForDocument(Document $document): array
     {
@@ -188,7 +187,7 @@ class DocumentTargetingConfigurator
         }
 
         $targetGroups = array_unique($targetGroups);
-        $targetGroups = array_filter($targetGroups, fn($id) => TargetGroup::isIdActive($id));
+        $targetGroups = array_filter($targetGroups, fn ($id) => TargetGroup::isIdActive($id));
 
         $this->cache->save($cacheKey, $targetGroups, [sprintf('document_%d', $document->getId()), 'target_groups']);
 

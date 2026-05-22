@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -28,6 +28,7 @@ use OpenDxp\Cache\Core\CoreCacheHandler;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 class Device implements DataProviderInterface
 {
@@ -35,13 +36,11 @@ class Device implements DataProviderInterface
 
     /**
      * The cache handler caching detected results
-     *
      */
     private ?CoreCacheHandler $cache = null;
 
     /**
      * The cache pool which is passed to the DeviceDetector
-     *
      */
     private ?TagAwareAdapterInterface $cachePool = null;
 
@@ -139,7 +138,7 @@ class Device implements DataProviderInterface
             }
 
             $dd->parse();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error((string) $e);
 
             return null;

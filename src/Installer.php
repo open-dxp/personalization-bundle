@@ -10,13 +10,14 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle;
 
 use OpenDxp\Extension\Bundle\Installer\SettingsStoreAwareInstaller;
+use Override;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -29,7 +30,7 @@ class Installer extends SettingsStoreAwareInstaller
         'targeting',
     ];
 
-    #[\Override]
+    #[Override]
     public function install(): void
     {
         $this->installDatabaseTable();
@@ -37,7 +38,7 @@ class Installer extends SettingsStoreAwareInstaller
         parent::install();
     }
 
-    #[\Override]
+    #[Override]
     public function uninstall(): void
     {
         // Cleanup should be done manually

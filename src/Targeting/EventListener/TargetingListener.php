@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -33,6 +33,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\VisitorInfoResolver;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\VisitorInfoStorageInterface;
 use OpenDxp\Http\Request\Resolver\OpenDxpContextResolver;
 use OpenDxp\Http\RequestHelper;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -185,7 +186,7 @@ class TargetingListener implements EventSubscriberInterface
             }
 
             if (!$handler instanceof ResponseTransformingActionHandlerInterface) {
-                throw new \RuntimeException(sprintf(
+                throw new RuntimeException(sprintf(
                     'The "%s" action handler does not implement ResponseTransformingActionHandlerInterface',
                     $type
                 ));

@@ -10,15 +10,17 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Controller\Admin;
 
+use Exception;
 use OpenDxp\Bundle\AdminBundle\Controller\Admin\Document\SnippetController;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Document\Targeting\TargetingDocumentInterface;
 use OpenDxp\Model\Document;
+use Override;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -58,16 +60,16 @@ class TargetingSnippetController extends SnippetController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
+    #[Override]
     #[Route('/save', name: 'opendxp_admin_document_snippet_save', methods: ['PUT', 'POST'])]
-    #[\Override]
     public function saveAction(Request $request): JsonResponse
     {
         return parent::saveAction($request);
     }
 
-    #[\Override]
+    #[Override]
     protected function addDataToDocument(Request $request, Document $document): void
     {
         if ($document instanceof Document\PageSnippet) {

@@ -11,12 +11,13 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler;
 
+use InvalidArgumentException;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\Rule;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\DataLoaderInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\DataProviderDependentInterface;
@@ -35,7 +36,7 @@ class DelegatingActionHandler implements ActionHandlerInterface
         $type = $action['type'] ?? null;
 
         if (empty($type)) {
-            throw new \InvalidArgumentException('Invalid action: type is not set');
+            throw new InvalidArgumentException('Invalid action: type is not set');
         }
 
         $actionHandler = $this->getActionHandler($type);
@@ -56,7 +57,7 @@ class DelegatingActionHandler implements ActionHandlerInterface
     public function getActionHandler(string $type): ActionHandlerInterface
     {
         if (!$this->actionHandlers->has($type)) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Invalid condition: there is no action handler registered for type "%s"',
                 $type
             ));

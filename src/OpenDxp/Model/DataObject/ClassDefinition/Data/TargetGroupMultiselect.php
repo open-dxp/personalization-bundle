@@ -11,15 +11,17 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Model\DataObject\ClassDefinition\Data;
 
+use OpenDxp;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool;
 use OpenDxp\Model;
 use OpenDxp\Model\DataObject\ClassDefinition\Service;
+use Override;
 
 class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multiselect
 {
@@ -45,18 +47,18 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         $this->setOptions($options);
     }
 
-    #[\Override]
+    #[Override]
     public static function __set_state(array $data): static
     {
         $obj = parent::__set_state($data);
-        if (\OpenDxp::inAdmin()) {
+        if (OpenDxp::inAdmin()) {
             $obj->configureOptions();
         }
 
         return $obj;
     }
 
-    #[\Override]
+    #[Override]
     public function jsonSerialize(): mixed
     {
         if (Service::doRemoveDynamicOptions()) {
@@ -66,7 +68,7 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         return parent::jsonSerialize();
     }
 
-    #[\Override]
+    #[Override]
     public function resolveBlockedVars(): array
     {
         $blockedVars = parent::resolveBlockedVars();
@@ -75,7 +77,7 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
         return $blockedVars;
     }
 
-    #[\Override]
+    #[Override]
     public function getFieldType(): string
     {
         return 'targetGroupMultiselect';
@@ -90,7 +92,6 @@ class TargetGroupMultiselect extends Model\DataObject\ClassDefinition\Data\Multi
      * @return $this
      *
      * @internal
-     *
      */
     private function init(): static
     {

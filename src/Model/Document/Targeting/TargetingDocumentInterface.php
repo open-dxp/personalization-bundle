@@ -11,7 +11,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -29,40 +29,32 @@ interface TargetingDocumentInterface extends ElementInterface
      * Build target group element prefix for a given target group or for
      * the configured one if $targetGroupId is null and there is a configured
      * target group.
-     *
-     *
      */
     public function getTargetGroupEditablePrefix(?int $targetGroupId = null): string;
 
     /**
      * Adds target group prefix to element name if it is not already prefixed and
      * if a target group is set.
-     *
-     *
      */
     public function getTargetGroupEditableName(string $name): string;
 
     /**
      * Sets the target group to use
-     *
      */
     public function setUseTargetGroup(?int $useTargetGroup = null): void;
 
     /**
      * Returns the target group to use
-     *
      */
     public function getUseTargetGroup(): ?int;
 
     /**
      * Checks if the document has targeting specific elements
-     *
      */
     public function hasTargetGroupSpecificEditables(): bool;
 
     /**
      * Returns targeting specific element names
-     *
      */
     public function getTargetGroupSpecificEditableNames(): array;
 }

@@ -11,15 +11,18 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage;
 
+use DateTimeImmutable;
+use LogicException;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Throwable;
 
 /**
  * Implements a 2-step storage handling a primary storage which needs a visitor ID (e.g. external DB)
@@ -121,10 +124,10 @@ class FallbackStorage implements TargetingStorageInterface
 
     public function migrateFromStorage(TargetingStorageInterface $storage, VisitorInfo $visitorInfo, string $scope): void
     {
-        throw new \LogicException('migrateFromStorage() is not supported in FallbackStorage');
+        throw new LogicException('migrateFromStorage() is not supported in FallbackStorage');
     }
 
-    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getCreatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         if ($visitorInfo->hasVisitorId()) {
             return $this->primaryStorage->getCreatedAt($visitorInfo, $scope);
@@ -133,7 +136,7 @@ class FallbackStorage implements TargetingStorageInterface
         return $this->fallbackStorage->getCreatedAt($visitorInfo, $scope);
     }
 
-    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?\DateTimeImmutable
+    public function getUpdatedAt(VisitorInfo $visitorInfo, string $scope): ?DateTimeImmutable
     {
         if ($visitorInfo->hasVisitorId()) {
             return $this->primaryStorage->getUpdatedAt($visitorInfo, $scope);
@@ -151,7 +154,7 @@ class FallbackStorage implements TargetingStorageInterface
                 // clear fallback after successful migration
                 $this->fallbackStorage->clear($visitorInfo, $scope);
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error((string) $e);
         }
     }

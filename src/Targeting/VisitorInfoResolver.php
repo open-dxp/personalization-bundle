@@ -11,13 +11,14 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Targeting;
 
 use Doctrine\DBAL\Connection;
+use Exception;
 use OpenDxp\Bundle\PersonalizationBundle\Debug\Traits\StopwatchTrait;
 use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingEvent;
 use OpenDxp\Bundle\PersonalizationBundle\Event\Targeting\TargetingResolveVisitorInfoEvent;
@@ -35,8 +36,11 @@ class VisitorInfoResolver
     use StopwatchTrait;
 
     public const string ATTRIBUTE_VISITOR_INFO = '_visitor_info';
+
     public const string STORAGE_KEY_RULE_CONDITION_VARIABLES = 'vi:var';
+
     public const string STORAGE_KEY_MATCHED_SESSION_RULES = 'vi:sru'; // visitorInfo:sessionRules
+
     public const string STORAGE_KEY_MATCHED_VISITOR_RULES = 'vi:vru';
 
     /**
@@ -91,7 +95,7 @@ class VisitorInfoResolver
 
         try {
             $configuredRules = $this->db->fetchOne('SELECT id FROM targeting_target_groups UNION SELECT id FROM targeting_rules LIMIT 1');
-        } catch (\Exception) {
+        } catch (Exception) {
             return false;
         }
 

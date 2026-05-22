@@ -10,7 +10,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -33,13 +33,11 @@ class Page extends \OpenDxp\Model\Document\Page implements TargetingDocumentInte
      * Comma separated IDs of target groups
      *
      * @internal
-     *
      */
     protected string $targetGroupIds = '';
 
     /**
      * Set linked Target Groups as set in properties panel as list of IDs
-     *
      */
     public function setTargetGroupIds(array|string $targetGroupIds): void
     {
@@ -58,7 +56,6 @@ class Page extends \OpenDxp\Model\Document\Page implements TargetingDocumentInte
 
     /**
      * Get serialized list of Target Group IDs
-     *
      */
     public function getTargetGroupIds(): string
     {
@@ -80,7 +77,7 @@ class Page extends \OpenDxp\Model\Document\Page implements TargetingDocumentInte
             }
         }, $targetGroups);
 
-        $ids = array_filter($ids, fn($id) => null !== $id && $id > 0);
+        $ids = array_filter($ids, fn ($id) => null !== $id && $id > 0);
 
         $this->setTargetGroupIds($ids);
     }

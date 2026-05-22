@@ -10,7 +10,7 @@ declare(strict_types=1);
  * LICENSE.md which is distributed with this source code.
  *
  * @copyright  Copyright (c) Pimcore GmbH (https://pimcore.com)
- * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.ch)
+ * @copyright  Modification Copyright (c) OpenDXP (https://www.opendxp.io)
  * @license    https://www.gnu.org/licenses/gpl-3.0.html  GNU General Public License version 3 (GPLv3)
  */
 
@@ -20,6 +20,7 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\ActionHandler\DelegatingActio
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\DataLoaderInterface;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Service\TargetingEnableService;
 use OpenDxp\Bundle\PersonalizationBundle\Targeting\Storage\TargetingStorageInterface;
+use Override;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -31,7 +32,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class OpenDxpPersonalizationExtension extends ConfigurableExtension
 {
-    #[\Override]
+    #[Override]
     public function getAlias(): string
     {
         return 'opendxp_personalization';

@@ -18,20 +18,20 @@ namespace OpenDxp\Bundle\PersonalizationBundle\Controller\Admin;
 
 use  OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting;
 use OpenDxp\Bundle\PersonalizationBundle\Model\Tool\Targeting\TargetGroup;
+use OpenDxp\Bundle\PersonalizationBundle\Security\PersonalizationPermission;
 use OpenDxp\Cache\Core\CoreCacheHandler;
-use OpenDxp\Controller\KernelControllerEventInterface;
 use OpenDxp\Controller\Traits\JsonHelperTrait;
 use OpenDxp\Controller\UserAwareController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * @internal
  */
 #[Route('/targeting')]
-class TargetingController extends UserAwareController implements KernelControllerEventInterface
+class TargetingController extends UserAwareController
 {
     // RULES
     use JsonHelperTrait;
@@ -42,6 +42,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/rule/list', name: 'opendxp_bundle_personalization_targeting_rulelist', methods: ['GET'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function ruleListAction(Request $request): JsonResponse
     {
         $targets = [];
@@ -63,6 +64,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/rule/add', name: 'opendxp_bundle_personalization_targeting_ruleadd', methods: ['POST'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function ruleAddAction(Request $request): JsonResponse
     {
         $target = new Targeting\Rule();
@@ -73,6 +75,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/rule/delete', name: 'opendxp_bundle_personalization_targeting_ruledelete', methods: ['DELETE'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function ruleDeleteAction(Request $request): JsonResponse
     {
         $success = false;
@@ -87,6 +90,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/rule/get', name: 'opendxp_bundle_personalization_targeting_ruleget', methods: ['GET'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function ruleGetAction(Request $request): JsonResponse
     {
         $target = Targeting\Rule::getById((int) $request->get('id'));
@@ -99,6 +103,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/rule/save', name: 'opendxp_bundle_personalization_targeting_rulesave', methods: ['PUT'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function ruleSaveAction(Request $request): JsonResponse
     {
         $data = $this->decodeJson($request->get('data'));
@@ -117,6 +122,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/rule/order', name: 'opendxp_bundle_personalization_targeting_ruleorder', methods: ['POST'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function ruleOrderAction(Request $request): JsonResponse
     {
         $return = [
@@ -185,6 +191,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/target-group/add', name: 'opendxp_bundle_personalization_targeting_targetgroupadd', methods: ['POST'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function targetGroupAddAction(Request $request, CoreCacheHandler $cache): JsonResponse
     {
         $targetGroup = new TargetGroup();
@@ -197,6 +204,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/target-group/delete', name: 'opendxp_bundle_personalization_targeting_targetgroupdelete', methods: ['DELETE'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function targetGroupDeleteAction(Request $request, CoreCacheHandler $cache): JsonResponse
     {
         $success = false;
@@ -213,6 +221,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/target-group/get', name: 'opendxp_bundle_personalization_targeting_targetgroupget', methods: ['GET'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function targetGroupGetAction(Request $request): JsonResponse
     {
         $targetGroup = TargetGroup::getById((int) $request->get('id'));
@@ -225,6 +234,7 @@ class TargetingController extends UserAwareController implements KernelControlle
     }
 
     #[Route('/target-group/save', name: 'opendxp_bundle_personalization_targeting_targetgroupsave', methods: ['PUT'])]
+    #[IsGranted(PersonalizationPermission::Targeting->value)]
     public function targetGroupSaveAction(Request $request, CoreCacheHandler $cache): JsonResponse
     {
         $data = $this->decodeJson($request->get('data'));
@@ -240,15 +250,5 @@ class TargetingController extends UserAwareController implements KernelControlle
         $cache->clearTag('target_groups');
 
         return $this->jsonResponse(['success' => true]);
-    }
-
-    public function onKernelControllerEvent(ControllerEvent $event): void
-    {
-        if (!$event->isMainRequest()) {
-            return;
-        }
-
-        // check permissions
-        $this->checkActionPermission($event, 'targeting', ['targetGroupListAction']);
     }
 }

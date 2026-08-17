@@ -15,7 +15,8 @@
     },
     "require": {
         "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
-        "open-dxp/opendxp": "^1.1",
+        "open-dxp/opendxp": "^1.4",
+        "open-dxp/admin-bundle": "^1.4",
         "geoip2/geoip2": "^2.9",
         "symfony/stopwatch": "^7.4",
         "symfony/form": "^7.4",
@@ -23,8 +24,7 @@
         "matomo/device-detector": "^6.0",
         "open-dxp/newsletter-bundle": "^1.0",
         "colinmollenhour/credis": "^1.10.0",
-        "mjaschen/phpgeo": "^4.0",
-        "open-dxp/admin-bundle": "^1.0"
+        "mjaschen/phpgeo": "^4.0"
     },
     "require-dev": {
         "symfony/dotenv": "^7.4",

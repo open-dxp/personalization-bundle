@@ -41,8 +41,10 @@ class TargetingCodeGenerator
         self::BLOCK_AFTER_SCRIPT_TAG,
     ];
 
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly Environment $twig)
-    {
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly Environment $twig
+    ) {
     }
 
     public function generateCode(VisitorInfo $visitorInfo): string

@@ -35,8 +35,10 @@ class DbStorage implements TargetingStorageInterface, MaintenanceStorageInterfac
 
     private string $tableName = 'targeting_storage';
 
-    public function __construct(private Connection $db, array $options = [])
-    {
+    public function __construct(
+        private Connection $db,
+        array $options = []
+    ) {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
 

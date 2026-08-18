@@ -22,8 +22,10 @@ use OpenDxp\Bundle\PersonalizationBundle\Targeting\Model\VisitorInfo;
 
 class TargetingRuleEvent extends TargetingEvent
 {
-    public function __construct(VisitorInfo $visitorInfo, private readonly Rule $rule)
-    {
+    public function __construct(
+        VisitorInfo $visitorInfo,
+        private readonly Rule $rule
+    ) {
         parent::__construct($visitorInfo);
     }
 

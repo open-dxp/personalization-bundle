@@ -27,9 +27,8 @@ class AssignTargetGroup implements ActionHandlerInterface
 {
     const STORAGE_KEY = 'tg';
 
-    public function __construct(
-        private readonly TargetingStorageInterface $storage
-    ) {
+    public function __construct(private readonly TargetingStorageInterface $storage)
+    {
     }
 
     public function apply(VisitorInfo $visitorInfo, array $action, ?Rule $rule = null): void

@@ -38,8 +38,10 @@ class TargetingDataCollector
         VisitedPagesCounter::PROVIDER_KEY,
     ];
 
-    public function __construct(private TargetingStorageInterface $targetingStorage, private DocumentTargetingConfigurator $targetingConfigurator)
-    {
+    public function __construct(
+        private TargetingStorageInterface $targetingStorage,
+        private DocumentTargetingConfigurator $targetingConfigurator
+    ) {
     }
 
     public function collectVisitorInfo(VisitorInfo $visitorInfo): array

@@ -21,8 +21,10 @@ use OpenDxp\Http\RequestHelper;
 
 class TargetingEnableService
 {
-    public function __construct(private readonly RequestHelper $requestHelper, private readonly bool $enabled)
-    {
+    public function __construct(
+        private readonly RequestHelper $requestHelper,
+        private readonly bool $enabled
+    ) {
     }
 
     public function isTargetingEnabled(): bool

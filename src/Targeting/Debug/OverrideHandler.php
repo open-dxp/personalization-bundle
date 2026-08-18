@@ -28,8 +28,10 @@ class OverrideHandler
     /**
      * @param OverrideHandlerInterface[] $overrideHandlers
      */
-    public function __construct(private readonly FormFactoryInterface $formFactory, private readonly array $overrideHandlers)
-    {
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+        private readonly array $overrideHandlers
+    ) {
     }
 
     public function getForm(Request $request): FormInterface

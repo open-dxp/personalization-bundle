@@ -21,8 +21,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class OverrideEvent extends Event
 {
-    public function __construct(private readonly string $type, private readonly array $data)
-    {
+    public function __construct(
+        private readonly string $type,
+        private readonly array $data
+    ) {
     }
 
     public function getType(): string

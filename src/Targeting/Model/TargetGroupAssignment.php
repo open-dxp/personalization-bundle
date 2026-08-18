@@ -24,8 +24,10 @@ class TargetGroupAssignment
 {
     private int $count = 1;
 
-    public function __construct(private readonly TargetGroup $targetGroup, int $count = 1)
-    {
+    public function __construct(
+        private readonly TargetGroup $targetGroup,
+        int $count = 1
+    ) {
         $this->setCount($count);
     }
 

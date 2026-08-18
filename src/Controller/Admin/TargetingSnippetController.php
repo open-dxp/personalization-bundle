@@ -28,8 +28,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * @internal
  */
-#[Route('/targeting/snippet')]
 #[IsGranted(CorePermission::Documents->value)]
+#[Route('/targeting/snippet')]
 class TargetingSnippetController extends AdminAbstractController
 {
     #[Route('/clear-targeting-editable-data', name: 'opendxp_bundle_personalization_clear_targeting_snippet_editable_data', methods: ['PUT'])]

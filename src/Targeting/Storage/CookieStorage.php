@@ -55,8 +55,10 @@ class CookieStorage implements TargetingStorageInterface
         self::SCOPE_VISITOR => self::COOKIE_NAME_VISITOR,
     ];
 
-    public function __construct(private CookieSaveHandlerInterface $saveHandler, private EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private CookieSaveHandlerInterface $saveHandler,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     public function all(VisitorInfo $visitorInfo, string $scope): array

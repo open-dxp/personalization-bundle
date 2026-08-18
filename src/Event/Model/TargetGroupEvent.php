@@ -24,8 +24,10 @@ class TargetGroupEvent extends Event
     /**
      * TargetGroupEvent constructor.
      */
-    public function __construct(protected TargetGroup $targetGroup, protected array $arguments = [])
-    {
+    public function __construct(
+        protected TargetGroup $targetGroup,
+        protected array $arguments = []
+    ) {
     }
 
     public function getTargetGroup(): TargetGroup

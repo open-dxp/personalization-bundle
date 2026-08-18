@@ -21,8 +21,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class RenderToolbarEvent extends Event
 {
-    public function __construct(private string $template, private array $data)
-    {
+    public function __construct(
+        private string $template,
+        private array $data
+    ) {
     }
 
     public function getTemplate(): string

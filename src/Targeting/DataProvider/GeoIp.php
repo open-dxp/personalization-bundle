@@ -35,8 +35,10 @@ class GeoIp implements DataProviderInterface
 
     private ?CoreCacheHandler $cache = null;
 
-    public function __construct(private readonly ProviderInterface $geoIpProvider, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly ProviderInterface $geoIpProvider,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     public function setCache(CoreCacheHandler $cache): void

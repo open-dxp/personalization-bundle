@@ -35,8 +35,10 @@ class TargetingSessionBagListener implements EventSubscriberInterface
 
     const TARGETING_BAG_VISITOR = 'opendxp_targeting_visitor';
 
-    public function __construct(protected Config $config, private readonly TargetingEnableService $targetingEnableService)
-    {
+    public function __construct(
+        protected Config $config,
+        private readonly TargetingEnableService $targetingEnableService
+    ) {
     }
 
     public static function getSubscribedEvents(): array

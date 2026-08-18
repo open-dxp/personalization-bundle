@@ -26,8 +26,10 @@ use Psr\Container\ContainerInterface;
 
 class DelegatingActionHandler implements ActionHandlerInterface
 {
-    public function __construct(private readonly ContainerInterface $actionHandlers, private readonly DataLoaderInterface $dataLoader)
-    {
+    public function __construct(
+        private readonly ContainerInterface $actionHandlers,
+        private readonly DataLoaderInterface $dataLoader
+    ) {
     }
 
     public function apply(VisitorInfo $visitorInfo, array $action, ?Rule $rule = null): void

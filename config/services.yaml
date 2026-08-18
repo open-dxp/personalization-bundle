@@ -18,6 +18,13 @@ services:
         public: true
         tags: [ 'controller.service_arguments' ]
 
+    #
+    # Handlers
+    #
+
+    OpenDxp\Bundle\PersonalizationBundle\Handler\:
+        resource: '../src/Handler'
+
     # Newsletter Adapter
 
     opendxp.document.newsletter.factory.default:

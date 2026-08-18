@@ -16,81 +16,30 @@ declare(strict_types=1);
 
 namespace OpenDxp\Bundle\PersonalizationBundle\Controller\Admin;
 
-use Exception;
-use OpenDxp\Bundle\AdminBundle\Controller\Admin\Document\SnippetController;
-use OpenDxp\Bundle\PersonalizationBundle\Model\Document\Targeting\TargetingDocumentInterface;
-use OpenDxp\Model\Document;
-use Override;
+use OpenDxp\Bundle\AdminBundle\Attribute\SessionIdentityAware;
+use OpenDxp\Bundle\AdminBundle\Controller\AdminAbstractController;
+use OpenDxp\Bundle\PersonalizationBundle\Handler\Document\ClearTargetingEditables\ClearTargetingEditablesHandler;
+use OpenDxp\Bundle\PersonalizationBundle\Handler\Document\ClearTargetingEditables\ClearTargetingEditablesPayload;
+use OpenDxp\Security\CorePermission;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * @internal
  */
 #[Route('/targeting/snippet')]
-class TargetingSnippetController extends SnippetController
+#[IsGranted(CorePermission::Documents->value)]
+class TargetingSnippetController extends AdminAbstractController
 {
     #[Route('/clear-targeting-editable-data', name: 'opendxp_bundle_personalization_clear_targeting_snippet_editable_data', methods: ['PUT'])]
-    public function clearTargetingEditableDataAction(Request $request): JsonResponse
-    {
-        $targetGroupId = $request->request->getInt('targetGroup');
-        $docId = $request->request->getInt('id');
+    #[SessionIdentityAware]
+    public function clearTargetingEditableDataAction(
+        ClearTargetingEditablesPayload $payload,
+        ClearTargetingEditablesHandler $handler,
+    ): JsonResponse {
+        $handler($payload);
 
-        $doc = Document\PageSnippet::getById($docId);
-
-        if (!$doc) {
-            throw $this->createNotFoundException('Document not found');
-        }
-
-        foreach ($doc->getEditables() as $editable) {
-            if ($targetGroupId && $doc instanceof TargetingDocumentInterface) {
-                // remove target group specific elements
-                if (preg_match('/^' . preg_quote($doc->getTargetGroupEditablePrefix($targetGroupId), '/') . '/', $editable->getName())) {
-                    $doc->removeEditable($editable->getName());
-                }
-            }
-        }
-
-        $this->saveToSession($doc, $request->getSession(), true);
-
-        return $this->adminJson([
-            'success' => true,
-        ]);
-    }
-
-    /**
-     * @throws Exception
-     */
-    #[Override]
-    #[Route('/save', name: 'opendxp_admin_document_snippet_save', methods: ['PUT', 'POST'])]
-    public function saveAction(Request $request): JsonResponse
-    {
-        return parent::saveAction($request);
-    }
-
-    #[Override]
-    protected function addDataToDocument(Request $request, Document $document): void
-    {
-        if ($document instanceof Document\PageSnippet) {
-            // if a target group variant get's saved, we have to load all other editables first, otherwise they will get deleted
-
-            if ($request->get('appendEditables')
-                || ($document instanceof TargetingDocumentInterface)) { // ensure editable are loaded
-                $document->getEditables();
-            } else {
-                // ensure no editables (e.g. from session, version, ...) are still referenced
-                $document->setEditables(null);
-            }
-
-            if ($request->get('data')) {
-                $data = $this->decodeJson($request->get('data'));
-                foreach ($data as $name => $value) {
-                    $data = $value['data'] ?? null;
-                    $type = $value['type'];
-                    $document->setRawEditable($name, $type, $data);
-                }
-            }
-        }
+        return $this->apiOk();
     }
 }

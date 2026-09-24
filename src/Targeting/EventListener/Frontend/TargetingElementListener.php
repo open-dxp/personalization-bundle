@@ -67,7 +67,6 @@ class TargetingElementListener implements EventSubscriberInterface, LoggerAwareI
             if ($document) {
                 // apply target group configuration
                 $this->applyTargetGroups($request, $document);
-                $this->documentResolver->setDocument($request, $document);
             }
         }
     }

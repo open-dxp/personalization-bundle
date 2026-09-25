@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+    name: personalization-bundle
+    description: Personalization bundle provides personalization features such as
+        behavioral targeting, visitor profiling and personalized content for
+        OpenDXP.
+spec:
+    type: library
+    lifecycle: production
+    owner: team-opendxp
+    system: opendxp

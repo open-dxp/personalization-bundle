@@ -24,6 +24,7 @@ services:
 
     OpenDxp\Bundle\PersonalizationBundle\Handler\:
         resource: '../src/Handler'
+        exclude: '../src/Handler/**/*{Payload,Result}.php'
 
     # Newsletter Adapter
 

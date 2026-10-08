@@ -17,7 +17,9 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 it('keeps the locale a route sets over the language of the document', function () {
     $document = $this->createStub(Page::class);
-    $document->method('getProperty')->willReturnMap([['language', 'de']]);
+    $document
+        ->method('getProperty')
+        ->willReturnMap([['language', 'de']]);
 
     $request = Request::create('/de/product/it');
     $requestStack = new RequestStack();
@@ -28,10 +30,16 @@ it('keeps the locale a route sets over the language of the document', function (
     $request->setLocale('it');
 
     $contextResolver = $this->createStub(OpenDxpContextResolver::class);
-    $contextResolver->method('matchesOpenDxpContext')->willReturn(true);
+    $contextResolver
+        ->method('matchesOpenDxpContext')
+        ->willReturn(true);
 
-    $listener = new TargetingElementListener($documentResolver, $this->createStub(DocumentTargetingConfigurator::class));
+    $listener = new TargetingElementListener(
+        $documentResolver,
+        $this->createStub(DocumentTargetingConfigurator::class),
+    );
     $listener->setOpenDxpContextResolver($contextResolver);
+
     $listener->onKernelController(new ControllerEvent(
         $this->createStub(HttpKernelInterface::class),
         static fn (): Response => new Response(),
@@ -39,6 +47,8 @@ it('keeps the locale a route sets over the language of the document', function (
         HttpKernelInterface::MAIN_REQUEST,
     ));
 
-    expect($documentResolver->getDocument($request))->toBe($document)
-        ->and($request->getLocale())->toBe('it');
+    expect($documentResolver->getDocument($request))
+        ->toBe($document)
+        ->and($request->getLocale())
+        ->toBe('it');
 });

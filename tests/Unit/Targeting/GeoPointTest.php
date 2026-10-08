@@ -15,6 +15,9 @@ const MUNICH = [48.17546460000001, 11.551796999999965];
 const BERLIN = [52.5219184, 13.413214700000026];
 const BANGKOK = [13.75005680956885, 100.49125671386719];
 
+/**
+ * @param array{0: float, 1: float} $point
+ */
 function visitorAt(array $point): VisitorInfo
 {
     $visitor = new VisitorInfo(new Request());
@@ -24,7 +27,11 @@ function visitorAt(array $point): VisitorInfo
 }
 
 it('matches a visitor within the radius around Salzburg', function (array $visitor, int $radius, bool $matches) {
-    expect((new GeoPoint(...SALZBURG, radius: $radius))->match(visitorAt($visitor)))->toBe($matches);
+    $point = new GeoPoint(...SALZBURG, radius: $radius);
+
+    $matched = $point->match(visitorAt($visitor));
+
+    expect($matched)->toBe($matches);
 })->with([
     'Munich, 118 km, outside 110 km' => [MUNICH, 110, false],
     'Munich, 118 km, inside 120 km' => [MUNICH, 120, true],
@@ -36,7 +43,9 @@ it('matches a visitor within the radius around Salzburg', function (array $visit
 ]);
 
 it('cannot match without latitude, longitude and radius', function (?float $latitude, ?float $longitude, ?int $radius) {
-    expect((new GeoPoint($latitude, $longitude, $radius))->canMatch())->toBeFalse();
+    $point = new GeoPoint($latitude, $longitude, $radius);
+
+    expect($point->canMatch())->toBeFalse();
 })->with([
     'no radius' => [1.2, 2.3, null],
     'no longitude' => [1.2, null, 4],

@@ -1,8 +1,0 @@
-actor: UnitTester
-suite_namespace: OpenDxp\Bundle\PersonalizationBundle\Tests\Unit
-modules:
-    enabled:
-        - \OpenDxp\Bundle\PersonalizationBundle\Tests\Support\Helper\Unit
-        -   \OpenDxp\Tests\Support\Helper\OpenDxp:
-                connect_db: true
-                cache_router: false

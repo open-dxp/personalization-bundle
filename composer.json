@@ -10,12 +10,13 @@
             "*": "dist"
         },
         "allow-plugins": {
+            "pestphp/pest-plugin": true,
             "symfony/runtime": true
         }
     },
     "require": {
         "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
-        "open-dxp/opendxp": "^1.4",
+        "open-dxp/opendxp": "^1.5",
         "open-dxp/admin-bundle": "^1.4",
         "geoip2/geoip2": "^2.9",
         "symfony/stopwatch": "^7.4",
@@ -27,14 +28,11 @@
         "mjaschen/phpgeo": "^4.0"
     },
     "require-dev": {
-        "symfony/dotenv": "^7.4",
-        "symfony/runtime": "^7.4",
-        "phpunit/phpunit": "^9.5",
+        "open-dxp/test-foundation": "^1.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-symfony": "^2.0.14",
-        "codeception/codeception": "^5.3.5",
-        "codeception/module-asserts": "^2",
-        "codeception/module-symfony": "^3.1.1"
+        "symfony/dotenv": "^7.4",
+        "symfony/runtime": "^7.4"
     },
     "autoload": {
         "psr-4": {
@@ -44,11 +42,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "OpenDxp\\Bundle\\PersonalizationBundle\\Tests\\": "tests"
-        },
-        "files": [
-            "kernel/Kernel.php"
-        ]
+            "OpenDxp\\Bundle\\PersonalizationBundle\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "opendxp": {

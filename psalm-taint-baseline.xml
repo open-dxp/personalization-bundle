@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="7.13.2">
+  <file src="src/Model/Tool/Targeting/Rule/Dao.php">
+    <TaintedUnserialize>
+      <code>$data['actions']</code>
+      <code>$data['conditions']</code>
+    </TaintedUnserialize>
+  </file>
+  <file src="src/Model/Tool/Targeting/TargetGroup/Dao.php">
+    <TaintedUnserialize>
+      <code>$data['actions']</code>
+    </TaintedUnserialize>
+  </file>
+</files>
